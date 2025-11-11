@@ -1,25 +1,125 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MakController;
+use App\Http\Controllers\BastController;
+use App\Http\Controllers\RapatController;
 use App\Http\Controllers\TahunController;
 use App\Http\Controllers\SatuanController;
-use App\Http\Controllers\MakController;
 use App\Http\Controllers\JabatanController;
-use App\Http\Controllers\KodeSuratController;
-use App\Http\Controllers\KlasifikasiSuratController;
-use App\Http\Controllers\AsalSuratController;
-use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\SkoringController;
-use App\Http\Controllers\ArsipPerencanaanController;
-use App\Http\Controllers\SuratMasukPerencanaanController;
+use App\Http\Controllers\InstansiController;
+use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\UndanganController;
+use App\Http\Controllers\AsalSuratController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InformasiController;
+use App\Http\Controllers\KodeSuratController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\TipeUndanganController;
+use App\Http\Controllers\ArsipPerencanaanController;
+use App\Http\Controllers\KlasifikasiSuratController;
+use App\Http\Controllers\SuratMasukPerencanaanController;
+use App\Http\Controllers\DaftarHadirController;
+use App\Http\Controllers\KegiatanController;
+use App\Http\Controllers\KontenSettingController;
+use App\Http\Controllers\KriteriaController;
+use App\Http\Controllers\PartisipasiController;
+use App\Http\Controllers\PosterController;
+use App\Http\Controllers\RekapitulasiController;
+use App\Http\Controllers\SkoringCvController;
+use App\Http\Controllers\TingkatController;
+use App\Http\Controllers\PublikasiController;
 
 
 
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
+
+
+    Route::get('/tingkat', [TingkatController::class, 'index'])->name('tingkat.index');
+    Route::get('/tingkat/create', [TingkatController::class, 'create'])->name('tingkat.create');
+    Route::post('/tingkat', [TingkatController::class, 'store'])->name('tingkat.store');
+    Route::get('/tingkat/{id}/edit', [TingkatController::class, 'edit'])->name('tingkat.edit');
+    Route::put('/tingkat/{id}', [TingkatController::class, 'update'])->name('tingkat.update');
+    Route::delete('/tingkat/{id}', [TingkatController::class, 'destroy'])->name('tingkat.destroy');
+
+   
+
+
+    Route::get('/partisipasi', [PartisipasiController::class, 'index'])->name('partisipasi.index');
+    Route::get('/partisipasi/create', [PartisipasiController::class, 'create'])->name('partisipasi.create');
+    Route::post('/partisipasi', [PartisipasiController::class, 'store'])->name('partisipasi.store');
+    Route::get('/partisipasi/{id}/edit', [PartisipasiController::class, 'edit'])->name('partisipasi.edit');
+    Route::put('/partisipasi/{id}', [PartisipasiController::class, 'update'])->name('partisipasi.update');
+    Route::delete('/partisipasi/{id}', [PartisipasiController::class, 'destroy'])->name('partisipasi.destroy');
+
+    Route::get('/skoring-cv', [SkoringCvController::class, 'index'])->name('skoring_cv.index');
+    Route::get('/skoring-cv/add', [SkoringCvController::class, 'create'])->name('skoring_cv.create');
+    Route::post('/skoring-cv/add', [SkoringCvController::class, 'store'])->name('skoring_cv.store');
+    Route::get('/skoring-cv/{id}/edit', [SkoringCvController::class, 'edit'])->name('skoring_cv.edit');
+    Route::put('/skoring-cv/{id}', [SkoringCvController::class, 'update'])->name('skoring_cv.update');
+    Route::delete('/skoring-cv/{id}', [SkoringCvController::class, 'destroy'])->name('skoring_cv.destroy');
+
+    Route::get('/skoring', [SkoringController::class, 'index'])->name('skoring.index');
+    Route::get('/skoring/add', [SkoringController::class, 'create'])->name('skoring.create');
+    Route::post('/skoring/add', [SkoringController::class, 'store'])->name('skoring.store');
+    Route::get('/skoring/{id}/edit', [SkoringController::class, 'edit'])->name('skoring.edit');
+    Route::put('/skoring/{id}', [SkoringController::class, 'update'])->name('skoring.update');
+    Route::delete('/skoring/{id}', [SkoringController::class, 'destroy'])->name('skoring.destroy');
+
+     Route::get('/kriteria', [KriteriaController::class, 'index'])->name('kriteria.index');
+    Route::get('/kriteria/create', [KriteriaController::class, 'create'])->name('kriteria.create');
+    Route::post('/kriteria', [KriteriaController::class, 'store'])->name('kriteria.store');
+    Route::get('/kriteria/{id}/edit', [KriteriaController::class, 'edit'])->name('kriteria.edit');
+    Route::put('/kriteria/{id}', [KriteriaController::class, 'update'])->name('kriteria.update');
+    Route::delete('/kriteria/{id}', [KriteriaController::class, 'destroy'])->name('kriteria.destroy');
+
+    Route::get('/konten_setting', [KontenSettingController::class, 'index'])->name('konten_setting.index');
+    Route::get('/konten_setting/create', [KontenSettingController::class, 'create'])->name('konten_setting.create');
+    Route::post('/konten_setting', [KontenSettingController::class, 'store'])->name('konten_setting.store');
+    Route::get('/konten_setting/{id}/edit', [KontenSettingController::class, 'edit'])->name('konten_setting.edit');
+    Route::put('/konten_setting/{id}', [KontenSettingController::class, 'update'])->name('konten_setting.update');    
+    Route::delete('/konten_setting/{id}', [KontenSettingController::class, 'destroy'])->name('konten_setting.destroy');
+
+    Route::get('/poster', [PosterController::class, 'index'])->name('poster.index');
+    Route::get('/poster/create', [PosterController::class, 'create'])->name('poster.create');
+    Route::post('/poster', [PosterController::class, 'store'])->name('poster.store');
+    Route::get('/poster/{id}/edit', [PosterController::class, 'edit'])->name('poster.edit');
+    Route::put('/poster/{id}', [PosterController::class, 'update'])->name('poster.update');
+    Route::delete('/poster/{id}', [PosterController::class, 'destroy'])->name('poster.destroy');
+
+     Route::get('/poster/{id}/lihat', [PosterController::class, 'lihat'])->name('poster.lihat');
+
+    Route::get('/album_foto', [App\Http\Controllers\AlbumFotoController::class, 'index'])->name('album_foto.index');
+    Route::get('/album_foto/create', [App\Http\Controllers\AlbumFotoController::class, 'create'])->name('album_foto.create');
+    Route::post('/album_foto', [App\Http\Controllers\AlbumFotoController::class, 'store'])->name('album_foto.store');
+    Route::get('/album_foto/{id}/edit', [App\Http\Controllers\AlbumFotoController::class, 'edit'])->name('album_foto.edit');
+    Route::put('/album_foto/{id}', [App\Http\Controllers\AlbumFotoController::class, 'update'])->name('album_foto.update');
+    Route::delete('/album_foto/{id}', [App\Http\Controllers\AlbumFotoController::class, 'destroy'])->name('album_foto.destroy'); 
+    
+    Route::get('/publikasi', [App\Http\Controllers\PublikasiController::class, 'index'])->name('publikasi.index');
+    Route::get('/publikasi/create', [App\Http\Controllers\PublikasiController::class, 'create'])->name('publikasi.create');
+    Route::post('/publikasi', [App\Http\Controllers\PublikasiController::class, 'store'])->name('publikasi.store');
+    Route::get('/publikasi/{id}/edit', [App\Http\Controllers\PublikasiController::class, 'edit'])->name('publikasi.edit');
+    Route::put('/publikasi/{id}', [App\Http\Controllers\PublikasiController::class, 'update'])->name('publikasi.update');
+    Route::delete('/publikasi/{id}', [App\Http\Controllers\PublikasiController::class, 'destroy'])->name('publikasi.destroy');
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
 
     Route::get('/tahun', [TahunController::class, 'index'])->name('tahun.index');
     Route::get('/tahun/add', [TahunController::class, 'create'])->name('tahun.add');
@@ -63,12 +163,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::put('/klasifikasi-surat/{id}', [KlasifikasiSuratController::class, 'update'])->name('klasifikasi_surat.update');
     Route::delete('/klasifikasi-surat/{id}', [KlasifikasiSuratController::class, 'destroy'])->name('klasifikasi_surat.destroy');
 
-    Route::get('/asal-surat', [AsalSuratController::class, 'index'])->name('asal_surat.index');
-    Route::get('/asal-surat/add', [AsalSuratController::class, 'create'])->name('asal_surat.add');
-    Route::post('/asal-surat/add', [AsalSuratController::class, 'store'])->name('asal_surat.store');
-    Route::get('/asal-surat/edit/{id}', [AsalSuratController::class, 'edit'])->name('asal_surat.edit');
-    Route::put('/asal-surat/{id}', [AsalSuratController::class, 'update'])->name('asal_surat.update');
-    Route::delete('/asal-surat/{id}', [AsalSuratController::class, 'destroy'])->name('asal_surat.destroy');
+    Route::get('/kegiatan', [KegiatanController::class, 'index'])->name('kegiatan.index');
+    Route::get('/kegiatan/create', [KegiatanController::class, 'create'])->name('kegiatan.create');
+    Route::post('/kegiatan', [KegiatanController::class, 'store'])->name('kegiatan.store');
+    Route::get('/kegiatan/{id}/edit', [KegiatanController::class, 'edit'])->name('kegiatan.edit');
+    Route::put('/kegiatan/{id}', [KegiatanController::class, 'update'])->name('kegiatan.update');
+    Route::delete('/kegiatan/{id}', [KegiatanController::class, 'destroy'])->name('kegiatan.destroy');
 
     Route::get('/informasi', [InformasiController::class, 'index'])->name('informasi.index');
     Route::get('/informasi/create', [InformasiController::class, 'create'])->name('informasi.create');
@@ -112,13 +212,63 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-
+// ubah route index menajdi welcome.blade.php
 Route::get('/', function () {
-    if (Auth::check()) {
-        return redirect()->route('admin.dashboard.index');
-    }
-    return redirect('/login');
-});
+    return view('welcome');
+})->name('welcome');
+
+Route::get('/ketentuanumum', function () {
+    return view('public.ketentuan.umum');
+})->name('public.ketentuan.umum');
+
+Route::get('/ketentuanesai', function () {
+    return view('public.ketentuan.esai');
+})->name('public.ketentuan.esai');
+Route::get('/ketentuankampanye', function () {
+    return view('public.ketentuan.kampanye');
+})->name('public.ketentuan.kampanye');
+Route::get('/pengumumankegiatan', function () {
+    return view('public.pengumuman.kegiatan');
+})->name('public.pengumuman.kegiatan');
+Route::get('/pengumumanseleksi', function () {
+    return view('public.pengumuman.seleksi');
+})->name('public.pengumuman.seleksi');
+
+Route::get('/publikasi', function () {
+    return view('public.publikasi.publikasi');
+})
+->name('public.publikasi.publikasi');
+// Public About page route (used by navbar and CTAs)
+Route::get('/tentang-kami', function () {
+    return view('Public.TentangKami.index');
+})->name('tentang.kami');
+Route::get('/lowongan', function () {
+    return view('Public.Lowongan.index');
+})->name('public.lowongan.lowongan');
+
+Route::get('/tentangkami', function () {
+    return view('public.tentang.tentang');
+})->name('public.tentang.tentang');
+
+// Public Contact page route
+Route::get('/hubungi-kami', function () {
+    return view('Public.HubungiKami.index');
+})->name('hubungi.kami');
+
+// Public Satuan Kerja page route
+Route::get('/satuan-kerja', function () {
+    return view('Public.SatuanKerja.index');
+})->name('satuan.kerja');
+
+// Route::get('/login', function () {
+//     if (Auth::check()) {
+//         return redirect()->route('admin.dashboard.index');
+//     }
+//     return redirect('/login');
+// });
+// Route::get('/login', function () {
+//     return view('auth.login');
+// });
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', function () {
