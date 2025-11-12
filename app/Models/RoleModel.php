@@ -6,14 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class TahunModel extends Model
+class RoleModel extends Model
 {
     use HasFactory;
     protected $connection = 'db_magang';
-    protected $table = 'tahun';
+    protected $table = 'roles';
     protected $guarded = [];
     public $timestamps = false;
-
 
     protected static function boot()
     {

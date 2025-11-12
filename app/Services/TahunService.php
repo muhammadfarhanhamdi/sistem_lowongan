@@ -14,7 +14,6 @@ class TahunService
         $this->tahunModel = $tahunModel;
     }
 
-
     public function getAllActiveTahun()
     {
         return $this->tahunModel->where('status', 1)
@@ -22,18 +21,15 @@ class TahunService
             ->get();
     }
 
-
     public function createTahun(array $data)
     {
         return $this->tahunModel->create($data);
     }
 
-
     public function getTahunById($id)
     {
         return $this->tahunModel->findOrFail($id);
     }
-
 
     public function updateTahun($id, array $data)
     {
@@ -42,7 +38,6 @@ class TahunService
         return $tahun;
     }
 
-
     public function deleteTahun($id)
     {
         $tahun = $this->tahunModel->findOrFail($id);
@@ -50,7 +45,6 @@ class TahunService
         $tahun->save();
         return $tahun;
     }
-
 
     public function validateTahunData(Request $request)
     {

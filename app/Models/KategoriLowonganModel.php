@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class TahunModel extends Model
+class KategoriLowonganModel extends Model
 {
     use HasFactory;
     protected $connection = 'db_magang';
-    protected $table = 'tahun';
+    protected $table = 'kategori_lowongan';
     protected $guarded = [];
     public $timestamps = false;
 
