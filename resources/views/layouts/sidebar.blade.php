@@ -17,11 +17,13 @@
                 <li class="nav-item {{ request()->routeIs('admin.lowongan.*') ? 'active' : '' }}">
                     <a href="{{ route('admin.lowongan.index') }}" class="nav-link {{ request()->routeIs('admin.lowongan.*') ? 'active' : '' }}"><i class="ri-briefcase-4-line"></i> <span>Daftar Lowongan</span></a>
                 </li>
-                 <li class="nav-item {{ request()->routeIs('admin.periode_magang.*', 'admin.kategori_lowongan.*') ? 'active' : '' }}">
-                    <a href="" class="nav-link has-sub {{ request()->routeIs('admin.periode_magang.*', 'admin.kategori_lowongan.*') ? 'active show' : '' }}"><i class="ri-folder-settings-line"></i> <span>Master Lowongan</span></a>
-                    <nav class="nav nav-sub {{ request()->routeIs('admin.periode_magang.*', 'admin.kategori_lowongan.*') ? 'active show' : '' }}">
+                 <li class="nav-item {{ request()->routeIs('admin.periode_magang.*', 'admin.kategori_lowongan.*', 'admin.jenjang_pendidikan.*', 'admin.jurusan.*') ? 'active' : '' }}">
+                    <a href="" class="nav-link has-sub {{ request()->routeIs('admin.periode_magang.*', 'admin.kategori_lowongan.*', 'admin.jenjang_pendidikan.*', 'admin.jurusan.*') ? 'active show' : '' }}"><i class="ri-folder-settings-line"></i> <span>Master Lowongan</span></a>
+                    <nav class="nav nav-sub {{ request()->routeIs('admin.periode_magang.*', 'admin.kategori_lowongan.*', 'admin.jenjang_pendidikan.*', 'admin.jurusan.*') ? 'active show' : '' }}">
                         <a href="{{ route('admin.periode_magang.index') }}" class="nav-sub-link {{ request()->routeIs('admin.periode_magang.*') ? 'active' : '' }}">Periode Magang</a>
                         <a href="{{ route('admin.kategori_lowongan.index') }}" class="nav-sub-link {{ request()->routeIs('admin.kategori_lowongan.*') ? 'active' : '' }}">Kategori Posisi</a>
+                        <a href="{{ route('admin.jenjang_pendidikan.index') }}" class="nav-sub-link {{ request()->routeIs('admin.jenjang_pendidikan.*') ? 'active' : '' }}">Jenjang Pendidikan</a>
+                        <a href="{{ route('admin.jurusan.index') }}" class="nav-sub-link {{ request()->routeIs('admin.jurusan.*') ? 'active' : '' }}">Jurusan</a>
                     </nav>
                 </li>
             </ul>

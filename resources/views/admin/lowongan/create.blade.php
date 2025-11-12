@@ -59,6 +59,18 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="id_jenjang_pendidikan" class="form-label fw-bold">Jenjang Pendidikan (Min)</label>
+                            <select required class="form-select" id="id_jenjang_pendidikan" name="id_jenjang_pendidikan">
+                                <option value="" disabled selected>-- Pilih Jenjang Pendidikan --</option>
+                                @foreach($jenjangs as $jenjang)
+                                    <option value="{{ $jenjang->id }}" {{ old('id_jenjang_pendidikan') == $jenjang->id ? 'selected' : '' }}>
+                                        {{ $jenjang->nama_jenjang }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="id_periode" class="form-label fw-bold">Periode Magang (Opsional)</label>
                             <select class="form-select" id="id_periode" name="id_periode">
                                 <option value="" selected>-- Pilih Periode --</option>
@@ -74,6 +86,26 @@
                             <label for="kuota_lowongan" class="form-label fw-bold">Kuota Lowongan</label>
                             <input required type="number" class="form-control" id="kuota_lowongan" name="kuota_lowongan"
                                 placeholder="Jumlah kuota yang dibuka" value="{{ old('kuota_lowongan', 1) }}">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="jurusan_ids" class="form-label fw-bold">Jurusan yang Relevan</label>
+                            <select 
+                                required 
+                                multiple 
+                                class="form-select select2" 
+                                id="jurusan_ids" 
+                                name="jurusan_ids[]" 
+                                data-placeholder="Pilih Jurusan yang Relevan"
+                            >
+                                @foreach($jurusans as $jurusan)
+                                    <option value="{{ $jurusan->id }}" {{ in_array($jurusan->id, old('jurusan_ids', [])) ? 'selected' : '' }}>
+                                        {{ $jurusan->nama_jurusan }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="mb-3">
@@ -91,9 +123,7 @@
                             <input type="text" class="form-control" id="durasi" name="durasi"
                                 placeholder="Cth: 3 Bulan" value="{{ old('durasi') }}">
                         </div>
-                    </div>
 
-                    <div class="col-md-6">
                         <div class="mb-3">
                             <label for="tanggal_buka" class="form-label fw-bold">Tanggal Buka</label>
                             <input type="date" class="form-control" id="tanggal_buka" name="tanggal_buka"
@@ -105,19 +135,19 @@
                             <input type="date" class="form-control" id="tanggal_tutup" name="tanggal_tutup"
                                 value="{{ old('tanggal_tutup') }}">
                         </div>
-
-                        <div class="mb-3">
-                            <label for="deskripsi" class="form-label fw-bold">Deskripsi Lowongan</label>
-                            <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5"
-                                placeholder="Masukkan deskripsi detail lowongan">{{ old('deskripsi') }}</textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="kualifikasi" class="form-label fw-bold">Kualifikasi / Persyaratan</label>
-                            <textarea class="form-control" id="kualifikasi" name="kualifikasi" rows="5"
-                                placeholder="Masukkan poin-poin kualifikasi">{{ old('kualifikasi') }}</textarea>
-                        </div>
                     </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="deskripsi" class="form-label fw-bold">Deskripsi Lowongan</label>
+                    <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5"
+                        placeholder="Masukkan deskripsi detail lowongan">{{ old('deskripsi') }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="kualifikasi" class="form-label fw-bold">Kualifikasi / Persyaratan</label>
+                    <textarea class="form-control" id="kualifikasi" name="kualifikasi" rows="5"
+                        placeholder="Masukkan poin-poin kualifikasi">{{ old('kualifikasi') }}</textarea>
                 </div>
 
                 <hr>
@@ -126,3 +156,14 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        $('.select2').select2({
+            placeholder: $(this).data('placeholder') || 'Pilih opsi',
+            allowClear: true
+        });
+    });
+</script>
+@endpush

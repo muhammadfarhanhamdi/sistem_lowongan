@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\LowonganController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\SatuanKerjaController;
 use App\Http\Controllers\PeriodeMagangController;
 use App\Http\Controllers\PesertaMagangController;
 use App\Http\Controllers\KategoriLowonganController;
+use App\Http\Controllers\JenjangPendidikanController;
 
 
 
@@ -63,6 +65,22 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/peserta-magang/edit/{id}', [PesertaMagangController::class, 'edit'])->name('peserta_magang.edit');
     Route::put('/peserta-magang/{id}', [PesertaMagangController::class, 'update'])->name('peserta_magang.update');
     Route::delete('/peserta-magang/{id}', [PesertaMagangController::class, 'destroy'])->name('peserta_magang.destroy');
+
+    //route jenjang pendidikan
+    Route::get('/jenjang-pendidikan', [JenjangPendidikanController::class, 'index'])->name('jenjang_pendidikan.index');
+    Route::get('/jenjang-pendidikan/add', [JenjangPendidikanController::class, 'create'])->name('jenjang_pendidikan.add');
+    Route::post('/jenjang-pendidikan/add', [JenjangPendidikanController::class, 'store'])->name('jenjang_pendidikan.store');
+    Route::get('/jenjang-pendidikan/edit/{id}', [JenjangPendidikanController::class, 'edit'])->name('jenjang_pendidikan.edit');
+    Route::put('/jenjang-pendidikan/{id}', [JenjangPendidikanController::class, 'update'])->name('jenjang_pendidikan.update');
+    Route::delete('/jenjang-pendidikan/{id}', [JenjangPendidikanController::class, 'destroy'])->name('jenjang_pendidikan.destroy');
+
+    //route jurusan
+    Route::get('/jurusan', [JurusanController::class, 'index'])->name('jurusan.index');
+    Route::get('/jurusan/add', [JurusanController::class, 'create'])->name('jurusan.add');
+    Route::post('/jurusan/add', [JurusanController::class, 'store'])->name('jurusan.store');
+    Route::get('/jurusan/edit/{id}', [JurusanController::class, 'edit'])->name('jurusan.edit');
+    Route::put('/jurusan/{id}', [JurusanController::class, 'update'])->name('jurusan.update');
+    Route::delete('/jurusan/{id}', [JurusanController::class, 'destroy'])->name('jurusan.destroy');
     
 });
 

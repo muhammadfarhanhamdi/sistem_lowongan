@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
             KategoriLowonganSeeder::class,
             PeriodeMagangSeeder::class,
             LowonganSeeder::class,
+            JenjangPendidikanSeeder::class,
+            JurusanSeeder::class,
         ]);
         
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

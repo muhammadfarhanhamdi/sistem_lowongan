@@ -24,14 +24,12 @@ class LowonganService
             ->get();
     }
 
-    public function getPublicActiveLowongan()
+    public function getAllActiveLowongan()
     {
         return $this->lowonganModel
-            ->with(['satuanKerja', 'kategori'])
-            ->withCount('pelamar')
+            ->with(['satuanKerja', 'kategori', 'periode', 'jenjangPendidikan', 'jurusan'])
             ->where('status', 1)
-            ->whereDate('tanggal_tutup', '>=', now())
-            ->orderBy('tanggal_tutup', 'asc')
+            ->orderBy('id', 'desc')
             ->get();
     }
 
@@ -42,7 +40,7 @@ class LowonganService
 
     public function getLowonganById($id)
     {
-        return $this->lowonganModel->with(['satuanKerja', 'kategori', 'periode'])->findOrFail($id);
+        return $this->lowonganModel->with(['satuanKerja', 'kategori', 'periode', 'jenjangPendidikan', 'jurusan'])->findOrFail($id);
     }
 
     public function updateLowongan($id, array $data)
@@ -66,6 +64,9 @@ class LowonganService
             'id_satuan_kerja' => 'required|integer|exists:db_magang.satuan_kerja,id',
             'id_kategori_lowongan' => 'required|integer|exists:db_magang.kategori_lowongan,id',
             'id_periode' => 'nullable|integer|exists:db_magang.periode_magang,id',
+            'id_jenjang_pendidikan' => 'required|integer|exists:db_magang.jenjang_pendidikan,id',
+            'jurusan_ids' => 'required|array|min:1',
+            'jurusan_ids.*' => 'integer|exists:db_magang.jurusan,id',
             'judul_lowongan' => 'required|string|max:255',
             'kuota_lowongan' => 'required|integer|min:1',
             'durasi' => 'nullable|string|max:100',
@@ -75,5 +76,34 @@ class LowonganService
             'deskripsi' => 'nullable|string',
             'kualifikasi' => 'nullable|string',
         ]);
+    }
+
+    public function getPublicActiveLowongan($filters = [])
+    {
+        $query = $this->lowonganModel
+            ->with(['satuanKerja', 'kategori'])
+            ->withCount('pelamar') 
+            ->where('status', 1)
+            ->whereDate('tanggal_tutup', '>=', now());
+
+        if (!empty($filters['posisi'])) {
+            $query->where('id_kategori_lowongan', $filters['posisi']);
+        }
+
+        if (!empty($filters['satuan_kerja'])) {
+            $query->where('id_satuan_kerja', $filters['satuan_kerja']);
+        }
+
+        if (!empty($filters['jenjang'])) {
+            $query->where('id_jenjang_pendidikan', $filters['jenjang']);
+        }
+
+        if (!empty($filters['jurusan'])) {
+            $query->whereHas('jurusan', function ($q) use ($filters) {
+                $q->where('jurusan.id', $filters['jurusan']);
+            });
+        }
+            
+        return $query->orderBy('tanggal_tutup', 'asc')->get();
     }
 }
