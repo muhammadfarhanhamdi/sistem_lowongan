@@ -24,7 +24,6 @@
                     <tr>
                         <th scope="col" class="p-1 text-center" style="width: 5%;">No</th>
                         <th scope="col" class="p-1 text-center" style="width: 30%;">Nama Satuan Kerja</th>
-                        <th scope="col" class="p-1 text-center" style="width: 25%;">User Terhubung</th>
                         <th scope="col" class="p-1 text-center" style="width: 10%;">Kuota</th>
                         <th scope="col" class="p-1 text-center" style="width: 20%;">Aksi</th>
                     </tr>
@@ -34,7 +33,6 @@
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
                             <td>{{ $satuanKerja->nama_satuan }}</td>
-                            <td>{{ $satuanKerja->user->name ?? 'N/A' }}</td>
                             <td class="text-center">{{ $satuanKerja->kuota }}</td>
                             <td class="text-center">
                                 <a href="{{ route('admin.satuan_kerja.edit', $satuanKerja->id) }}" class="btn btn-primary
