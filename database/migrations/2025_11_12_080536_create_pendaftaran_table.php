@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('pendaftaran', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_peserta');
-            $table->unsignedBigInteger('id_satuan');
-            $table->unsignedBigInteger('id_periode');
+            $table->unsignedBigInteger('id_lowongan');
             $table->enum('jenis_pendaftaran', [
                 'magang',
                 'penelitian',
@@ -34,6 +33,8 @@ return new class extends Migration
             $table->timestamp('tanggal_input')->useCurrent();
             $table->integer('user_update')->nullable();
             $table->timestamp('tanggal_update')->nullable();
+            $table->foreign('id_lowongan')->references('id')->on('lowongan')->onDelete('cascade');
+
         });
     }
 

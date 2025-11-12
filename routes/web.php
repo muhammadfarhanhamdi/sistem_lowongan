@@ -3,9 +3,13 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LowonganController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SatuanKerjaController;
+use App\Http\Controllers\PeriodeMagangController;
+use App\Http\Controllers\PesertaMagangController;
+use App\Http\Controllers\KategoriLowonganController;
 
 
 
@@ -27,57 +31,91 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/satuan-kerja/edit/{id}', [SatuanKerjaController::class, 'edit'])->name('satuan_kerja.edit');
     Route::put('/satuan-kerja/{id}', [SatuanKerjaController::class, 'update'])->name('satuan_kerja.update');
     Route::delete('/satuan-kerja/{id}', [SatuanKerjaController::class, 'destroy'])->name('satuan_kerja.destroy');
+
+    //route lowongan
+    Route::get('/lowongan', [LowonganController::class, 'index'])->name('lowongan.index');
+    Route::get('/lowongan/add', [LowonganController::class, 'create'])->name('lowongan.add');
+    Route::post('/lowongan/add', [LowonganController::class, 'store'])->name('lowongan.store');
+    Route::get('/lowongan/edit/{id}', [LowonganController::class, 'edit'])->name('lowongan.edit');
+    Route::put('/lowongan/{id}', [LowonganController::class, 'update'])->name('lowongan.update');
+    Route::delete('/lowongan/{id}', [LowonganController::class, 'destroy'])->name('lowongan.destroy');
+
+    //route periode magang
+    Route::get('/periode-magang', [PeriodeMagangController::class, 'index'])->name('periode_magang.index');
+    Route::get('/periode-magang/add', [PeriodeMagangController::class, 'create'])->name('periode_magang.add');
+    Route::post('/periode-magang/add', [PeriodeMagangController::class, 'store'])->name('periode_magang.store');
+    Route::get('/periode-magang/edit/{id}', [PeriodeMagangController::class, 'edit'])->name('periode_magang.edit');
+    Route::put('/periode-magang/{id}', [PeriodeMagangController::class, 'update'])->name('periode_magang.update');
+    Route::delete('/periode-magang/{id}', [PeriodeMagangController::class, 'destroy'])->name('periode_magang.destroy');
+
+    //route kategori lowongan
+    Route::get('/kategori-lowongan', [KategoriLowonganController::class, 'index'])->name('kategori_lowongan.index');
+    Route::get('/kategori-lowongan/add', [KategoriLowonganController::class, 'create'])->name('kategori_lowongan.add');
+    Route::post('/kategori-lowongan/add', [KategoriLowonganController::class, 'store'])->name('kategori_lowongan.store');
+    Route::get('/kategori-lowongan/edit/{id}', [KategoriLowonganController::class, 'edit'])->name('kategori_lowongan.edit');
+    Route::put('/kategori-lowongan/{id}', [KategoriLowonganController::class, 'update'])->name('kategori_lowongan.update');
+    Route::delete('/kategori-lowongan/{id}', [KategoriLowonganController::class, 'destroy'])->name('kategori_lowongan.destroy');
+
+    //route peserta magang
+    Route::get('/peserta-magang', [PesertaMagangController::class, 'index'])->name('peserta_magang.index');
+    Route::get('/peserta-magang/add', [PesertaMagangController::class, 'create'])->name('peserta_magang.add');
+    Route::post('/peserta-magang/add', [PesertaMagangController::class, 'store'])->name('peserta_magang.store');
+    Route::get('/peserta-magang/edit/{id}', [PesertaMagangController::class, 'edit'])->name('peserta_magang.edit');
+    Route::put('/peserta-magang/{id}', [PesertaMagangController::class, 'update'])->name('peserta_magang.update');
+    Route::delete('/peserta-magang/{id}', [PesertaMagangController::class, 'destroy'])->name('peserta_magang.destroy');
     
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 // ubah route index menajdi welcome.blade.php
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// })->name('welcome');
 
-Route::get('/ketentuanumum', function () {
-    return view('public.ketentuan.umum');
-})->name('public.ketentuan.umum');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('welcome');
 
-Route::get('/ketentuanesai', function () {
-    return view('public.ketentuan.esai');
-})->name('public.ketentuan.esai');
-Route::get('/ketentuankampanye', function () {
-    return view('public.ketentuan.kampanye');
-})->name('public.ketentuan.kampanye');
-Route::get('/pengumumankegiatan', function () {
-    return view('public.pengumuman.kegiatan');
-})->name('public.pengumuman.kegiatan');
-Route::get('/pengumumanseleksi', function () {
-    return view('public.pengumuman.seleksi');
-})->name('public.pengumuman.seleksi');
+// Route::get('/ketentuanumum', function () {
+//     return view('public.ketentuan.umum');
+// })->name('public.ketentuan.umum');
 
-Route::get('/publikasi', function () {
-    return view('public.publikasi.publikasi');
-})
-->name('public.publikasi.publikasi');
-// Public About page route (used by navbar and CTAs)
-Route::get('/tentang-kami', function () {
-    return view('Public.TentangKami.index');
-})->name('tentang.kami');
-Route::get('/lowongan', function () {
-    return view('Public.Lowongan.index');
-})->name('public.lowongan.lowongan');
+// Route::get('/ketentuanesai', function () {
+//     return view('public.ketentuan.esai');
+// })->name('public.ketentuan.esai');
+// Route::get('/ketentuankampanye', function () {
+//     return view('public.ketentuan.kampanye');
+// })->name('public.ketentuan.kampanye');
+// Route::get('/pengumumankegiatan', function () {
+//     return view('public.pengumuman.kegiatan');
+// })->name('public.pengumuman.kegiatan');
+// Route::get('/pengumumanseleksi', function () {
+//     return view('public.pengumuman.seleksi');
+// })->name('public.pengumuman.seleksi');
 
-Route::get('/tentangkami', function () {
-    return view('public.tentang.tentang');
-})->name('public.tentang.tentang');
+// Route::get('/publikasi', function () {
+//     return view('public.publikasi.publikasi');
+// })
+// ->name('public.publikasi.publikasi');
+// // Public About page route (used by navbar and CTAs)
+// Route::get('/tentang-kami', function () {
+//     return view('Public.TentangKami.index');
+// })->name('tentang.kami');
+// Route::get('/lowongan', function () {
+//     return view('Public.Lowongan.index');
+// })->name('public.lowongan.lowongan');
 
-// Public Contact page route
-Route::get('/hubungi-kami', function () {
-    return view('Public.HubungiKami.index');
-})->name('hubungi.kami');
+// Route::get('/tentangkami', function () {
+//     return view('public.tentang.tentang');
+// })->name('public.tentang.tentang');
 
-// Public Satuan Kerja page route
-Route::get('/satuan-kerja', function () {
-    return view('Public.SatuanKerja.index');
-})->name('satuan.kerja');
+// // Public Contact page route
+// Route::get('/hubungi-kami', function () {
+//     return view('Public.HubungiKami.index');
+// })->name('hubungi.kami');
+
+// // Public Satuan Kerja page route
+// Route::get('/satuan-kerja', function () {
+//     return view('Public.SatuanKerja.index');
+// })->name('satuan.kerja');
 
 // Route::get('/login', function () {
 //     if (Auth::check()) {

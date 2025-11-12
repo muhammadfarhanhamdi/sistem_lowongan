@@ -53,8 +53,27 @@
                                 <select required class="form-select" id="id_role" name="id_role">
                                     <option value="" disabled>-- Pilih Role --</option>
                                     @foreach($roles as $role)
-                                        <option value="{{ $role->id }}" {{ old('id_role', $user->id_role) == $role->id ? 'selected' : '' }}>
+                                        <option value="{{ $role->id }}" data-nama-role="{{ $role->nama_role }}" {{ old('id_role', $user->id_role) == $role->id ? 'selected' : '' }}>
                                             {{ $role->nama_role }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="mb-3" id="satuan_kerja_wrapper" style="display: none;">
+                                <label for="id_satuan_kerja" class="form-label fw-bold">Satuan Kerja</label>
+                                <select class="form-select" id="id_satuan_kerja" name="id_satuan_kerja">
+                                    <option value="" selected>-- Pilih Satuan Kerja (Opsional) --</option>
+                                    
+                                    @if($currentUserSatuanKerja)
+                                        <option value="{{ $currentUserSatuanKerja->id }}" selected>
+                                            {{ $currentUserSatuanKerja->nama_satuan }} (Saat Ini)
+                                        </option>
+                                    @endif
+
+                                    @foreach($unassignedSatuanKerjas as $satuanKerja)
+                                        <option value="{{ $satuanKerja->id }}" {{ old('id_satuan_kerja') == $satuanKerja->id ? 'selected' : '' }}>
+                                            {{ $satuanKerja->nama_satuan }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -105,3 +124,28 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        const roleSelect = $('#id_role');
+        const satuanKerjaWrapper = $('#satuan_kerja_wrapper');
+
+        function toggleSatuanKerja(selectedRole) {
+            if (selectedRole === 'satuan_kerja') {
+                satuanKerjaWrapper.slideDown();
+            } else {
+                satuanKerjaWrapper.slideUp();
+            }
+        }
+
+        roleSelect.on('change', function() {
+            let selectedRoleName = $(this).find('option:selected').data('nama-role');
+            toggleSatuanKerja(selectedRoleName);
+        });
+
+        let initialRoleName = roleSelect.find('option:selected').data('nama-role');
+        toggleSatuanKerja(initialRoleName);
+    });
+</script>
+@endpush

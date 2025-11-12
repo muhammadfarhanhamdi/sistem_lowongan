@@ -51,17 +51,45 @@ class SatuanKerjaService
     public function validateSatuanKerjaData(Request $request, $id = null)
     {
         $rules = [
-            'id_user' => [
-                'required',
-                'integer',
-                'exists:db_magang.users,id',
-                $id ? Rule::unique('db_magang.satuan_kerja')->ignore($id, 'id_user') : Rule::unique('db_magang.satuan_kerja', 'id_user')
-            ],
             'nama_satuan' => 'required|string|max:100',
             'deskripsi' => 'nullable|string',
             'kuota' => 'required|integer|min:0'
         ];
 
         return $request->validate($rules);
+    }
+
+    public function getUnassignedSatuanKerja()
+    {
+        return $this->satuanKerjaModel
+            ->where('status', 1)
+            ->whereNull('id_user')
+            ->get();
+    }
+
+    public function getSatuanKerjaByUserId($userId)
+    {
+        return $this->satuanKerjaModel
+            ->where('id_user', $userId)
+            ->first();
+    }
+
+    public function assignUserToSatuanKerja($satuanKerjaId, $userId)
+    {
+        $satuanKerja = $this->getSatuanKerjaById($satuanKerjaId);
+        $satuanKerja->id_user = $userId;
+        $satuanKerja->save();
+        return $satuanKerja;
+    }
+
+    public function removeUserFromSatuanKerja($userId)
+    {
+        $satuanKerja = $this->getSatuanKerjaByUserId($userId);
+        if ($satuanKerja) {
+            $satuanKerja->id_user = null;
+            $satuanKerja->save();
+            return $satuanKerja;
+        }
+        return null;
     }
 }

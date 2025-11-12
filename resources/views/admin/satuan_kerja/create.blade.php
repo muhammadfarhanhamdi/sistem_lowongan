@@ -29,18 +29,6 @@
                     @method('POST')
 
                     <div class="mb-3">
-                        <label for="id_user" class="form-label fw-bold">User Satuan Kerja</label>
-                        <select required class="form-select" id="id_user" name="id_user">
-                            <option value="" disabled selected>-- Pilih User --</option>
-                            @foreach($users as $user)
-                                <option value="{{ $user->id }}" {{ old('id_user') == $user->id ? 'selected' : '' }}>
-                                    {{ $user->name }} ({{ $user->username }})
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
                         <label for="nama_satuan" class="form-label fw-bold">Nama Satuan Kerja</label>
                         <input required type="text" class="form-control" id="nama_satuan" name="nama_satuan"
                             placeholder="Masukan Nama Satuan Kerja" value="{{ old('nama_satuan') }}">

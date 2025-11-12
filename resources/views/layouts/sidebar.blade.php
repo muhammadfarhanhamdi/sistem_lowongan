@@ -12,6 +12,20 @@
                 </li>
             </ul>
         </div><div class="nav-group show">
+            <a href="#" class="nav-label">Manajemen Lowongan</a>
+            <ul class="nav nav-sidebar">
+                <li class="nav-item {{ request()->routeIs('admin.lowongan.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.lowongan.index') }}" class="nav-link {{ request()->routeIs('admin.lowongan.*') ? 'active' : '' }}"><i class="ri-briefcase-4-line"></i> <span>Daftar Lowongan</span></a>
+                </li>
+                 <li class="nav-item {{ request()->routeIs('admin.periode_magang.*', 'admin.kategori_lowongan.*') ? 'active' : '' }}">
+                    <a href="" class="nav-link has-sub {{ request()->routeIs('admin.periode_magang.*', 'admin.kategori_lowongan.*') ? 'active show' : '' }}"><i class="ri-folder-settings-line"></i> <span>Master Lowongan</span></a>
+                    <nav class="nav nav-sub {{ request()->routeIs('admin.periode_magang.*', 'admin.kategori_lowongan.*') ? 'active show' : '' }}">
+                        <a href="{{ route('admin.periode_magang.index') }}" class="nav-sub-link {{ request()->routeIs('admin.periode_magang.*') ? 'active' : '' }}">Periode Magang</a>
+                        <a href="{{ route('admin.kategori_lowongan.index') }}" class="nav-sub-link {{ request()->routeIs('admin.kategori_lowongan.*') ? 'active' : '' }}">Kategori Posisi</a>
+                    </nav>
+                </li>
+            </ul>
+        </div><div class="nav-group show">
             <a href="#" class="nav-label">Data Master</a>
             <ul class="nav nav-sidebar">
                 <li class="nav-item {{ request()->routeIs('admin.tahun.*', 'admin.mak.*', 'admin.satuan_kerja.*') ? 'active' : '' }}">
@@ -19,8 +33,8 @@
                             Administrasi</span></a>
                     <nav class="nav nav-sub {{ request()->routeIs('admin.tahun.*', 'admin.mak.*', 'admin.satuan_kerja.*') ? 'active show' : '' }}">
                         <a href="" class="nav-sub-link {{ request()->routeIs('admin.tahun.*') ? 'active' : '' }}">Tahun</a>
-                        <a href=" class="nav-sub-link {{ request()->routeIs('admin.mak.*') ? 'active' : '' }}">MAK</a>
-                        <a href="" class="nav-sub-link {{ request()->routeIs('admin.satuan_kerja.*') ? 'active' : '' }}">Satuan Kerja</a>
+                        <a href="" class="nav-sub-link {{ request()->routeIs('admin.mak.*') ? 'active' : '' }}">MAK</a>
+                        <a href="{{ route('admin.satuan_kerja.index') }}" class="nav-sub-link {{ request()->routeIs('admin.satuan_kerja.*') ? 'active' : '' }}">Satuan Kerja</a>
                     </nav>
                 </li>
                 <li class="nav-item {{ request()->routeIs('admin.kode_surat.*', 'admin.klasifikasi_surat.*') ? 'active' : '' }}">
@@ -42,11 +56,14 @@
             <a href="#" class="nav-label">Manajemen SDM</a>
             <ul class="nav nav-sidebar">
                 <li class="nav-item {{ request()->routeIs('admin.jabatan.*', 'admin.user.*') ? 'active' : '' }}">
-                    <a href="" class="nav-link has-sub {{ request()->routeIs('admin.jabatan.*', 'admin.user.*') ? 'active show' : '' }}"><i class="ri-group-line"></i> <span>Data SDM</span></a>
+                    <a href="" class="nav-link has-sub {{ request()->routeIs('admin.jabatan.*', 'admin.user.*') ? 'active show' : '' }}"><i class="ri-group-line"></i> <span>User & Jabatan</span></a>
                     <nav class="nav nav-sub {{ request()->routeIs('admin.jabatan.*', 'admin.user.*') ? 'active show' : '' }}">
-                        <a href="" class="nav-sub-link {{ request()->routeIs('admin.jabatan.*') ? 'active' : '' }}">Jabatan</a>
                         <a href="{{ route('admin.user.index') }}" class="nav-sub-link {{ request()->routeIs('admin.user.*') ? 'active' : '' }}">Pengguna</a>
+                        <a href="" class="nav-sub-link {{ request()->routeIs('admin.jabatan.*') ? 'active' : '' }}">Jabatan</a>
                     </nav>
+                </li>
+                <li class="nav-item {{ request()->routeIs('admin.peserta_magang.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.peserta_magang.index') }}" class="nav-link {{ request()->routeIs('admin.peserta_magang.*') ? 'active' : '' }}"><i class="ri-graduation-cap-line"></i> <span>Peserta Magang</span></a>
                 </li>
                 <li class="nav-item">
                     <a href="" class="nav-link has-sub"><i class="ri-user-switch-line"></i> <span>Login
@@ -73,7 +90,7 @@
                     <nav class="nav nav-sub {{ request()->routeIs('admin.arsip_perencanaan.*', 'admin.surat_masuk_perencanaan.*') ? 'active show' : '' }}">
                         <a href="" class="nav-sub-link {{ request()->routeIs('admin.arsip_perencanaan.*') ? 'active' : '' }}">Arsip Perencanaan</a>
                         <a href="" class="nav-sub-link {{ request()->routeIs('admin.surat_masuk_perencanaan.*') ? 'active' : '' }}">Surat Masuk</a>
-                        <a href="" class="nav-sub-link">Surat Keluar</a>
+                        <a href="{{ asset('template/dist/apps/gallery-video.html') }}" class="nav-sub-link">Surat Keluar</a>
                     </nav>
                 </li>
                  <li class="nav-item">
@@ -185,7 +202,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="" class="nav-link has-sub"><i class="ri-bar-chart-box-line"></i> <span>SICAPING: Data</span></a>
-                    <nav class="nav-sub">
+                    <nav class="nav nav-sub">
                         <a href="{{ asset('template/dist/docs/chart-flot.html') }}" class="nav-sub-link">Pagu Indikatif</a>
                         <a href="{{ asset('template/dist/docs/chart-apex.html') }}" class="nav-sub-link">Pagu Anggaran</a>
                         <a href="{{ asset('template/dist/docs/chart-chartjs.html') }}" class="nav-sub-link">Alokasi Anggaran</a>
@@ -232,4 +249,4 @@
                     @csrf
                 </form>
             </nav>
-        </div></div></div>
+        </div></div></div>```

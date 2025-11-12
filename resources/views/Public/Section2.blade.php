@@ -77,155 +77,63 @@
 
       <!-- Job Cards Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Job Card -->
+                
+        @forelse ($lowongans as $lowongan)
         <div class="border-2 border-[#007E5D] rounded-2xl p-8 hover:shadow-lg transition duration-300 flex flex-col justify-between">
-          <div>
-            <img src="{{ asset('images/logo_pustek.png') }}" alt="Pustekinfo" class="h-32 ">
-            <h3 class="text-xl font-semibold mb-1 text-[#1A1A1A]">Pusat Teknologi Informasi</h3>
-            <p class="text-gray-600 text-sm mb-2">WEB DEVELOPER</p>
-            <p class="text-[#007E5D] font-medium mb-4 text-sm">2 Kuota | 10 Pelamar</p>
+            <div>
+                {{-- Logo (Statis, bisa diganti jika ada path logo di SatuanKerja) --}}
+                <img src="{{ asset('images/logo_pustek.png') }}" alt="{{ $lowongan->satuanKerja->nama_satuan ?? 'N/A' }}" class="h-32 ">
+                
+                {{-- Nama Satuan Kerja --}}
+                <h3 class="text-xl font-semibold mb-1 text-[#1A1A1A]">{{ $lowongan->satuanKerja->nama_satuan ?? 'Satker Tidak Ditemukan' }}</h3>
+                
+                {{-- Posisi / Kategori --}}
+                <p class="text-gray-600 text-sm mb-2">{{ $lowongan->kategori->nama_kategori ?? 'Posisi Umum' }}</p>
+                
+                {{-- Kuota & Pelamar --}}
+                <p class="text-[#007E5D] font-medium mb-4 text-sm">
+                    {{ $lowongan->kuota_lowongan }} Kuota | {{ $lowongan->pelamar_count }} Pelamar
+                </p>
 
-            <div class="flex gap-3 mb-6">
-              <span class="border border-[#007E5D] text-[#007E5D] px-4 py-1 rounded-full text-sm">3 Bulan</span>
-              <span class="border border-[#007E5D] text-[#007E5D] px-4 py-1 rounded-full text-sm">Onsite</span>
+                {{-- Durasi & Tipe Pekerjaan --}}
+                <div class="flex gap-3 mb-6">
+                    @if($lowongan->durasi)
+                        <span class="border border-[#007E5D] text-[#007E5D] px-4 py-1 rounded-full text-sm">{{ $lowongan->durasi }}</span>
+                    @endif
+                    <span class="border border-[#007E5D] text-[#007E5D] px-4 py-1 rounded-full text-sm">{{ $lowongan->tipe_pekerjaan }}</span>
+                </div>
+
+                <hr class="my-4">
+
+                {{-- Tanggal Penutupan --}}
+                <p class="text-sm text-gray-700 mb-2">Penutupan: 
+                    @if($lowongan->tanggal_tutup)
+                        <span class="text-red-500 font-medium">{{ \Carbon\Carbon::parse($lowongan->tanggal_tutup)->format('d F Y') }}</span>
+                    @else
+                        <span class="text-green-600 font-medium">Terbuka</span>
+                    @endif
+                </p>
+                
+                {{-- Tanggal Dibuat --}}
+                <div class="flex items-center gap-2 text-gray-500 text-sm bg-gray-100 px-3 py-2 rounded-lg">
+                    <i class="fa-regular fa-calendar"></i>
+                    <span>Dibuat {{ \Carbon\Carbon::parse($lowongan->tanggal_input)->diffForHumans() }}</span>
+                </div>
             </div>
 
-            <hr class="my-4">
-
-            <p class="text-sm text-gray-700 mb-2">Penutupan: <span class="text-red-500 font-medium">10 November 2025</span></p>
-            <div class="flex items-center gap-2 text-gray-500 text-sm bg-gray-100 px-3 py-2 rounded-lg">
-              <i class="fa-regular fa-calendar"></i>
-              <span>Dibuat 1 bulan yang lalu</span>
-            </div>
-          </div>
-
-          <a href="#" class="mt-6 block text-center bg-[#FCD12A] text-[#1A1A1A] font-semibold py-3 rounded-lg hover:bg-yellow-400 transition duration-300">
-            Lihat Detail
-          </a>
+            {{-- Tombol Detail --}}
+            <a href="" class="mt-6 block text-center bg-[#FCD12A] text-[#1A1A1A] font-semibold py-3 rounded-lg hover:bg-yellow-400 transition duration-300">
+                Lihat Detail
+            </a>
         </div>
-
-      <div class="border-2 border-[#007E5D] rounded-2xl p-8 hover:shadow-lg transition duration-300 flex flex-col justify-between">
-          <div>
-            <img src="{{ asset('images/logo_pustek.png') }}" alt="Pustekinfo" class="h-32 ">
-            <h3 class="text-xl font-semibold mb-1 text-[#1A1A1A]">Pusat Teknologi Informasi</h3>
-            <p class="text-gray-600 text-sm mb-2">WEB DEVELOPER</p>
-            <p class="text-[#007E5D] font-medium mb-4 text-sm">2 Kuota | 10 Pelamar</p>
-
-            <div class="flex gap-3 mb-6">
-              <span class="border border-[#007E5D] text-[#007E5D] px-4 py-1 rounded-full text-sm">3 Bulan</span>
-              <span class="border border-[#007E5D] text-[#007E5D] px-4 py-1 rounded-full text-sm">Onsite</span>
+        @empty
+            <div class="col-span-3 text-center py-10 text-gray-600 border border-gray-300 rounded-lg">
+                <h4 class="text-xl font-semibold">Belum Ada Lowongan Magang yang Dibuka</h4>
+                <p class="mt-2">Silakan cek kembali di lain waktu.</p>
             </div>
+        @endforelse
 
-            <hr class="my-4">
-
-            <p class="text-sm text-gray-700 mb-2">Penutupan: <span class="text-red-500 font-medium">10 November 2025</span></p>
-            <div class="flex items-center gap-2 text-gray-500 text-sm bg-gray-100 px-3 py-2 rounded-lg">
-              <i class="fa-regular fa-calendar"></i>
-              <span>Dibuat 1 bulan yang lalu</span>
-            </div>
-          </div>
-
-          <a href="#" class="mt-6 block text-center bg-[#FCD12A] text-[#1A1A1A] font-semibold py-3 rounded-lg hover:bg-yellow-400 transition duration-300">
-            Lihat Detail
-          </a>
-        </div> <div class="border-2 border-[#007E5D] rounded-2xl p-8 hover:shadow-lg transition duration-300 flex flex-col justify-between">
-          <div>
-            <img src="{{ asset('images/logo_pustek.png') }}" alt="Pustekinfo" class="h-32 ">
-            <h3 class="text-xl font-semibold mb-1 text-[#1A1A1A]">Pusat Teknologi Informasi</h3>
-            <p class="text-gray-600 text-sm mb-2">WEB DEVELOPER</p>
-            <p class="text-[#007E5D] font-medium mb-4 text-sm">2 Kuota | 10 Pelamar</p>
-
-            <div class="flex gap-3 mb-6">
-              <span class="border border-[#007E5D] text-[#007E5D] px-4 py-1 rounded-full text-sm">3 Bulan</span>
-              <span class="border border-[#007E5D] text-[#007E5D] px-4 py-1 rounded-full text-sm">Onsite</span>
-            </div>
-
-            <hr class="my-4">
-
-            <p class="text-sm text-gray-700 mb-2">Penutupan: <span class="text-red-500 font-medium">10 November 2025</span></p>
-            <div class="flex items-center gap-2 text-gray-500 text-sm bg-gray-100 px-3 py-2 rounded-lg">
-              <i class="fa-regular fa-calendar"></i>
-              <span>Dibuat 1 bulan yang lalu</span>
-            </div>
-          </div>
-
-          <a href="#" class="mt-6 block text-center bg-[#FCD12A] text-[#1A1A1A] font-semibold py-3 rounded-lg hover:bg-yellow-400 transition duration-300">
-            Lihat Detail
-          </a>
-        </div> <div class="border-2 border-[#007E5D] rounded-2xl p-8 hover:shadow-lg transition duration-300 flex flex-col justify-between">
-          <div>
-            <img src="{{ asset('images/logo_pustek.png') }}" alt="Pustekinfo" class="h-32 ">
-            <h3 class="text-xl font-semibold mb-1 text-[#1A1A1A]">Pusat Teknologi Informasi</h3>
-            <p class="text-gray-600 text-sm mb-2">WEB DEVELOPER</p>
-            <p class="text-[#007E5D] font-medium mb-4 text-sm">2 Kuota | 10 Pelamar</p>
-
-            <div class="flex gap-3 mb-6">
-              <span class="border border-[#007E5D] text-[#007E5D] px-4 py-1 rounded-full text-sm">3 Bulan</span>
-              <span class="border border-[#007E5D] text-[#007E5D] px-4 py-1 rounded-full text-sm">Onsite</span>
-            </div>
-
-            <hr class="my-4">
-
-            <p class="text-sm text-gray-700 mb-2">Penutupan: <span class="text-red-500 font-medium">10 November 2025</span></p>
-            <div class="flex items-center gap-2 text-gray-500 text-sm bg-gray-100 px-3 py-2 rounded-lg">
-              <i class="fa-regular fa-calendar"></i>
-              <span>Dibuat 1 bulan yang lalu</span>
-            </div>
-          </div>
-
-          <a href="#" class="mt-6 block text-center bg-[#FCD12A] text-[#1A1A1A] font-semibold py-3 rounded-lg hover:bg-yellow-400 transition duration-300">
-            Lihat Detail
-          </a>
-        </div> <div class="border-2 border-[#007E5D] rounded-2xl p-8 hover:shadow-lg transition duration-300 flex flex-col justify-between">
-          <div>
-            <img src="{{ asset('images/logo_pustek.png') }}" alt="Pustekinfo" class="h-32 ">
-            <h3 class="text-xl font-semibold mb-1 text-[#1A1A1A]">Pusat Teknologi Informasi</h3>
-            <p class="text-gray-600 text-sm mb-2">WEB DEVELOPER</p>
-            <p class="text-[#007E5D] font-medium mb-4 text-sm">2 Kuota | 10 Pelamar</p>
-
-            <div class="flex gap-3 mb-6">
-              <span class="border border-[#007E5D] text-[#007E5D] px-4 py-1 rounded-full text-sm">3 Bulan</span>
-              <span class="border border-[#007E5D] text-[#007E5D] px-4 py-1 rounded-full text-sm">Onsite</span>
-            </div>
-
-            <hr class="my-4">
-
-            <p class="text-sm text-gray-700 mb-2">Penutupan: <span class="text-red-500 font-medium">10 November 2025</span></p>
-            <div class="flex items-center gap-2 text-gray-500 text-sm bg-gray-100 px-3 py-2 rounded-lg">
-              <i class="fa-regular fa-calendar"></i>
-              <span>Dibuat 1 bulan yang lalu</span>
-            </div>
-          </div>
-
-          <a href="#" class="mt-6 block text-center bg-[#FCD12A] text-[#1A1A1A] font-semibold py-3 rounded-lg hover:bg-yellow-400 transition duration-300">
-            Lihat Detail
-          </a>
-        </div> <div class="border-2 border-[#007E5D] rounded-2xl p-8 hover:shadow-lg transition duration-300 flex flex-col justify-between">
-          <div>
-            <img src="{{ asset('images/logo_pustek.png') }}" alt="Pustekinfo" class="h-32 ">
-            <h3 class="text-xl font-semibold mb-1 text-[#1A1A1A]">Pusat Teknologi Informasi</h3>
-            <p class="text-gray-600 text-sm mb-2">WEB DEVELOPER</p>
-            <p class="text-[#007E5D] font-medium mb-4 text-sm">2 Kuota | 10 Pelamar</p>
-
-            <div class="flex gap-3 mb-6">
-              <span class="border border-[#007E5D] text-[#007E5D] px-4 py-1 rounded-full text-sm">3 Bulan</span>
-              <span class="border border-[#007E5D] text-[#007E5D] px-4 py-1 rounded-full text-sm">Onsite</span>
-            </div>
-
-            <hr class="my-4">
-
-            <p class="text-sm text-gray-700 mb-2">Penutupan: <span class="text-red-500 font-medium">10 November 2025</span></p>
-            <div class="flex items-center gap-2 text-gray-500 text-sm bg-gray-100 px-3 py-2 rounded-lg">
-              <i class="fa-regular fa-calendar"></i>
-              <span>Dibuat 1 bulan yang lalu</span>
-            </div>
-          </div>
-
-          <a href="#" class="mt-6 block text-center bg-[#FCD12A] text-[#1A1A1A] font-semibold py-3 rounded-lg hover:bg-yellow-400 transition duration-300">
-            Lihat Detail
-          </a>
-        </div>
-      </div>
+    </div>
 
       <!-- Pagination -->
       <div class="flex justify-center items-center gap-3 mt-14">

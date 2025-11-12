@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('satuan_kerja', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_user')->unique();
+            $table->unsignedBigInteger('id_user')->unique()->nullable();
             $table->string('nama_satuan', 100);
             $table->text('deskripsi')->nullable();
             $table->integer('kuota')->default(0);

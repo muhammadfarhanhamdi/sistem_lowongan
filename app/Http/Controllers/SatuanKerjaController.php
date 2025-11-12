@@ -6,18 +6,14 @@ use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Services\SatuanKerjaService;
-use App\Services\UserService;
-use App\Models\RoleModel;
 
 class SatuanKerjaController extends Controller
 {
     protected $satuanKerjaService;
-    protected $userService;
 
-    public function __construct(SatuanKerjaService $satuanKerjaService, UserService $userService)
+    public function __construct(SatuanKerjaService $satuanKerjaService)
     {
         $this->satuanKerjaService = $satuanKerjaService;
-        $this->userService = $userService;
     }
 
 
@@ -29,12 +25,7 @@ class SatuanKerjaController extends Controller
 
     public function create()
     {
-        $roleId = RoleModel::where('nama_role', 'satuan_kerja')->value('id');
-        
-        $allUsers = $this->userService->getAllActiveUsers();
-        $users = $allUsers->where('id_role', $roleId);
-
-        return view('admin.satuan_kerja.create', compact('users'));
+        return view('admin.satuan_kerja.create');
     }
 
     public function store(Request $request)
@@ -54,12 +45,7 @@ class SatuanKerjaController extends Controller
     {
         try {
             $satuanKerja = $this->satuanKerjaService->getSatuanKerjaById($id);
-            
-            $roleId = RoleModel::where('nama_role', 'satuan_kerja')->value('id');
-            $allUsers = $this->userService->getAllActiveUsers();
-            $users = $allUsers->where('id_role', $roleId);
-
-            return view('admin.satuan_kerja.edit', compact('satuanKerja', 'users'));
+            return view('admin.satuan_kerja.edit', compact('satuanKerja'));
 
         } catch (\Exception $e) {
             return redirect()->route('admin.satuan_kerja.index')
