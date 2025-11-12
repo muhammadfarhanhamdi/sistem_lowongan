@@ -74,59 +74,6 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('welcome');
 
-// Route::get('/ketentuanumum', function () {
-//     return view('public.ketentuan.umum');
-// })->name('public.ketentuan.umum');
-
-// Route::get('/ketentuanesai', function () {
-//     return view('public.ketentuan.esai');
-// })->name('public.ketentuan.esai');
-// Route::get('/ketentuankampanye', function () {
-//     return view('public.ketentuan.kampanye');
-// })->name('public.ketentuan.kampanye');
-// Route::get('/pengumumankegiatan', function () {
-//     return view('public.pengumuman.kegiatan');
-// })->name('public.pengumuman.kegiatan');
-// Route::get('/pengumumanseleksi', function () {
-//     return view('public.pengumuman.seleksi');
-// })->name('public.pengumuman.seleksi');
-
-// Route::get('/publikasi', function () {
-//     return view('public.publikasi.publikasi');
-// })
-// ->name('public.publikasi.publikasi');
-// // Public About page route (used by navbar and CTAs)
-// Route::get('/tentang-kami', function () {
-//     return view('Public.TentangKami.index');
-// })->name('tentang.kami');
-// Route::get('/lowongan', function () {
-//     return view('Public.Lowongan.index');
-// })->name('public.lowongan.lowongan');
-
-// Route::get('/tentangkami', function () {
-//     return view('public.tentang.tentang');
-// })->name('public.tentang.tentang');
-
-// // Public Contact page route
-// Route::get('/hubungi-kami', function () {
-//     return view('Public.HubungiKami.index');
-// })->name('hubungi.kami');
-
-// // Public Satuan Kerja page route
-// Route::get('/satuan-kerja', function () {
-//     return view('Public.SatuanKerja.index');
-// })->name('satuan.kerja');
-
-// Route::get('/login', function () {
-//     if (Auth::check()) {
-//         return redirect()->route('admin.dashboard.index');
-//     }
-//     return redirect('/login');
-// });
-// Route::get('/login', function () {
-//     return view('auth.login');
-// });
-
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', function () {
     Auth::logout();
