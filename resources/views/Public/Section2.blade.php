@@ -128,8 +128,8 @@
 
                 {{-- Tanggal Penutupan --}}
                 <p class="text-sm text-gray-700 mb-2">Penutupan: 
-                    @if($lowongan->tanggal_tutup)
-                        <span class="text-red-500 font-medium">{{ \Carbon\Carbon::parse($lowongan->tanggal_tutup)->format('d F Y') }}</span>
+                    @if ($lowongan->tanggal_tutup)
+                        <span class="text-red-500 font-medium">{{ \Carbon\Carbon::parse($lowongan->tanggal_tutup)->translatedFormat('d F Y') }}</span>
                     @else
                         <span class="text-green-600 font-medium">Terbuka</span>
                     @endif

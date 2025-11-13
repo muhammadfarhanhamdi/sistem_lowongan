@@ -44,7 +44,7 @@ class HomeController extends Controller
         $lowongans = $query->paginate(6)->appends($request->query());
 
         $total_lowongan = $lowongans->total(); 
-        $total_pelamar = 1200; // ini data statis
+        $total_pelamar = 1200; 
 
         return view('welcome', compact(
             'lowongans', 
@@ -55,5 +55,40 @@ class HomeController extends Controller
             'jurusans', 
             'jenjangs'
         ));
+    }
+
+    public function showLowonganPage(Request $request)
+    {
+        $kategoris = $this->kategoriLowonganService->getAllActiveKategoriLowongan();
+        $satuanKerjas = $this->satuanKerjaService->getAllActiveSatuanKerja();
+        $jurusans = $this->jurusanService->getAllActiveJurusan();
+        $jenjangs = $this->jenjangPendidikanService->getAllActiveJenjang();
+
+        $query = $this->lowonganService->getPublicActiveLowongan($request->all());
+        
+        $lowongans = $query->paginate(6)->appends($request->query());
+
+        $total_lowongan = $lowongans->total(); 
+        $total_pelamar = 1200; // ini statis
+
+        return view('Public.Lowongan.index', compact(
+            'lowongans', 
+            'total_lowongan', 
+            'total_pelamar', 
+            'kategoris', 
+            'satuanKerjas', 
+            'jurusans', 
+            'jenjangs'
+        ));
+    }
+
+    public function showLowonganDetail($id)
+    {
+        try {
+            $lowongan = $this->lowonganService->getLowonganById($id);
+            return view('Public.Lowongan.detail', compact('lowongan')); 
+        } catch (\Exception $e) {
+            abort(404);
+        }
     }
 }

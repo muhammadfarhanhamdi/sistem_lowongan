@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\LowonganController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SatuanKerjaController;
 use App\Http\Controllers\PeriodeMagangController;
@@ -98,9 +99,8 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/tentang-kami', function () {
     return view('Public.TentangKami.index');
 })->name('tentang.kami');
-Route::get('/lowongan', function () {
-    return view('Public.Lowongan.index');
-})->name('public.lowongan.lowongan');
+Route::get('/lowongan', [HomeController::class, 'showLowonganPage'])->name('public.lowongan.index');
+Route::get('/lowongan/{id}', [HomeController::class, 'showLowonganDetail'])->name('public.lowongan.detail');
 
 // Public Contact page route
 Route::get('/hubungi-kami', function () {
