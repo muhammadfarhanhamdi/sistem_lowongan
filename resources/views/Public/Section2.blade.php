@@ -19,7 +19,7 @@
         <h2 class="text-3xl md:text-4xl font-bold mb-4 text-[#1A1A1A]">
           Temukan Karier yang paling Sesuai untuk Kamu
         </h2>
-        <p class="text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        <p id="lowongan-grid"  class="text-gray-600 max-w-3xl mx-auto leading-relaxed">
           Kami menawarkan berbagai peluang yang sesuai dengan keterampilan dan ambisi Kamu. 
           Daftar hari ini dan ambil langkah berikutnya menuju karier impian. 
           Masa depan Kamu dimulai di sini.
@@ -157,17 +157,11 @@
     </div>
 
       <!-- Pagination -->
+      @if ($lowongans->lastPage() > 1)
       <div class="flex justify-center items-center gap-3 mt-14">
-        <button class="w-10 h-10 rounded-full bg-[#007E5D] text-white flex items-center justify-center">
-          <i class="fa-solid fa-chevron-left"></i>
-        </button>
-        <button class="w-10 h-10 rounded-full bg-[#007E5D] text-white flex items-center justify-center">1</button>
-        <button class="w-10 h-10 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center">2</button>
-        <button class="w-10 h-10 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center">3</button>
-        <button class="w-10 h-10 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center">
-          <i class="fa-solid fa-chevron-right"></i>
-        </button>
+          {{ $lowongans->appends(request()->query())->fragment('lowongan-grid')->links('vendor.pagination.tailwind') }}
       </div>
+      @endif
 
     </div>
   </section>

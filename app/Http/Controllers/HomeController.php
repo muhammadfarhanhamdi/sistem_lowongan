@@ -39,10 +39,12 @@ class HomeController extends Controller
         $jurusans = $this->jurusanService->getAllActiveJurusan();
         $jenjangs = $this->jenjangPendidikanService->getAllActiveJenjang();
 
-        $lowongans = $this->lowonganService->getPublicActiveLowongan($request->all());
+        $query = $this->lowonganService->getPublicActiveLowongan($request->all());
+        
+        $lowongans = $query->paginate(6)->appends($request->query());
 
-        $total_lowongan = $lowongans->count(); 
-        $total_pelamar = 1200;
+        $total_lowongan = $lowongans->total(); 
+        $total_pelamar = 1200; // ini data statis
 
         return view('welcome', compact(
             'lowongans', 
@@ -51,8 +53,7 @@ class HomeController extends Controller
             'kategoris', 
             'satuanKerjas', 
             'jurusans', 
-            'jenjangs', 
-            'request'
+            'jenjangs'
         ));
     }
 }

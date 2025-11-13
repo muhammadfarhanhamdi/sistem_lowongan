@@ -93,6 +93,36 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('welcome');
 
 Route::post('/login', [LoginController::class, 'login']);
+
+// Public About page route (used by navbar and CTAs)
+Route::get('/tentang-kami', function () {
+    return view('Public.TentangKami.index');
+})->name('tentang.kami');
+Route::get('/lowongan', function () {
+    return view('Public.Lowongan.index');
+})->name('public.lowongan.lowongan');
+
+// Public Contact page route
+Route::get('/hubungi-kami', function () {
+    return view('Public.HubungiKami.index');
+})->name('hubungi.kami');
+
+// Public Satuan Kerja page route
+Route::get('/satuan-kerja', function () {
+    return view('Public.SatuanKerja.index');
+})->name('satuan.kerja');
+
+// Route::get('/login', function () {
+//     if (Auth::check()) {
+//         return redirect()->route('admin.dashboard.index');
+//     }
+//     return redirect('/login');
+// });
+// Route::get('/login', function () {
+//     return view('auth.login');
+// });
+
+Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', function () {
     Auth::logout();
     return redirect('/login');
