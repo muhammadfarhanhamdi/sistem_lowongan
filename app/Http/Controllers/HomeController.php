@@ -4,25 +4,55 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Services\LowonganService;
+use App\Services\KategoriLowonganService;
+use App\Services\SatuanKerjaService;
+use App\Services\JurusanService;
+use App\Services\JenjangPendidikanService;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     protected $lowonganService;
+    protected $kategoriLowonganService;
+    protected $satuanKerjaService;
+    protected $jurusanService;
+    protected $jenjangPendidikanService;
 
-    public function __construct(LowonganService $lowonganService)
-    {
+    public function __construct(
+        LowonganService $lowonganService,
+        KategoriLowonganService $kategoriLowonganService,
+        SatuanKerjaService $satuanKerjaService,
+        JurusanService $jurusanService,
+        JenjangPendidikanService $jenjangPendidikanService
+    ) {
         $this->lowonganService = $lowonganService;
+        $this->kategoriLowonganService = $kategoriLowonganService;
+        $this->satuanKerjaService = $satuanKerjaService;
+        $this->jurusanService = $jurusanService;
+        $this->jenjangPendidikanService = $jenjangPendidikanService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        // Panggil method baru yang sudah ditambahkan di Service
-        $lowongans = $this->lowonganService->getPublicActiveLowongan(); 
+        $kategoris = $this->kategoriLowonganService->getAllActiveKategoriLowongan();
+        $satuanKerjas = $this->satuanKerjaService->getAllActiveSatuanKerja();
+        $jurusans = $this->jurusanService->getAllActiveJurusan();
+        $jenjangs = $this->jenjangPendidikanService->getAllActiveJenjang();
+
+        $lowongans = $this->lowonganService->getPublicActiveLowongan($request->all());
 
         $total_lowongan = $lowongans->count(); 
         $total_pelamar = 1200;
-        
-        return view('welcome', compact('lowongans', 'total_lowongan', 'total_pelamar'));
+
+        return view('welcome', compact(
+            'lowongans', 
+            'total_lowongan', 
+            'total_pelamar', 
+            'kategoris', 
+            'satuanKerjas', 
+            'jurusans', 
+            'jenjangs', 
+            'request'
+        ));
     }
 }

@@ -9,6 +9,8 @@ use App\Services\LowonganService;
 use App\Services\SatuanKerjaService;
 use App\Services\KategoriLowonganService;
 use App\Services\PeriodeMagangService;
+use App\Services\JenjangPendidikanService;
+use App\Services\JurusanService;
 
 class LowonganController extends Controller
 {
@@ -16,24 +18,29 @@ class LowonganController extends Controller
     protected $satuanKerjaService;
     protected $kategoriLowonganService;
     protected $periodeMagangService;
+    protected $jenjangPendidikanService;
+    protected $jurusanService;
 
     public function __construct(
         LowonganService $lowonganService,
         SatuanKerjaService $satuanKerjaService,
         KategoriLowonganService $kategoriLowonganService,
-        PeriodeMagangService $periodeMagangService
+        PeriodeMagangService $periodeMagangService,
+        JenjangPendidikanService $jenjangPendidikanService,
+        JurusanService $jurusanService
     ) {
         $this->lowonganService = $lowonganService;
         $this->satuanKerjaService = $satuanKerjaService;
         $this->kategoriLowonganService = $kategoriLowonganService;
         $this->periodeMagangService = $periodeMagangService;
+        $this->jenjangPendidikanService = $jenjangPendidikanService;
+        $this->jurusanService = $jurusanService;
     }
 
 
     public function index()
     {
-        // MEMANGGIL METHOD BARU DARI SERVICE
-        $lowongans = $this->lowonganService->getAllActiveLowonganForCards();
+        $lowongans = $this->lowonganService->getAllActiveLowongan();
         return view('admin.lowongan.index', compact('lowongans'));
     }
 
@@ -42,15 +49,24 @@ class LowonganController extends Controller
         $satuanKerjas = $this->satuanKerjaService->getAllActiveSatuanKerja();
         $kategoris = $this->kategoriLowonganService->getAllActiveKategoriLowongan();
         $periodes = $this->periodeMagangService->getAllActivePeriodeMagang();
+        $jenjangs = $this->jenjangPendidikanService->getAllActiveJenjang();
+        $jurusans = $this->jurusanService->getAllActiveJurusan();
         
-        return view('admin.lowongan.create', compact('satuanKerjas', 'kategoris', 'periodes'));
+        return view('admin.lowongan.create', compact('satuanKerjas', 'kategoris', 'periodes', 'jenjangs', 'jurusans'));
     }
 
     public function store(Request $request)
     {
         try {
             $validatedData = $this->lowonganService->validateLowonganData($request);
+            
+            $jurusanIds = $validatedData['jurusan_ids'];
+            unset($validatedData['jurusan_ids']);
+            
             $lowongan = $this->lowonganService->createLowongan($validatedData);
+            
+            $lowongan->jurusan()->sync($jurusanIds);
+            
             Alert::success('Berhasil', 'Lowongan berhasil ditambahkan.');
             return redirect()->route('admin.lowongan.edit', ['id' => $lowongan->id]);
         } catch (\Exception $e) {
@@ -66,12 +82,16 @@ class LowonganController extends Controller
             $satuanKerjas = $this->satuanKerjaService->getAllActiveSatuanKerja();
             $kategoris = $this->kategoriLowonganService->getAllActiveKategoriLowongan();
             $periodes = $this->periodeMagangService->getAllActivePeriodeMagang();
+            $jenjangs = $this->jenjangPendidikanService->getAllActiveJenjang();
+            $jurusans = $this->jurusanService->getAllActiveJurusan();
+            
+            $selectedJurusanIds = $lowongan->jurusan->pluck('id')->toArray();
 
-            return view('admin.lowongan.edit', compact('lowongan', 'satuanKerjas', 'kategoris', 'periodes'));
+            return view('admin.lowongan.edit', compact('lowongan', 'satuanKerjas', 'kategoris', 'periodes', 'jenjangs', 'jurusans', 'selectedJurusanIds'));
 
         } catch (\Exception $e) {
-            return redirect()->route('admin.lowongan.index')
-                ->with('error', 'Data lowongan tidak ditemukan.');
+            Alert::error('Gagal', 'Data lowongan tidak ditemukan.');
+            return redirect()->route('admin.lowongan.index');
         }
     }
 
@@ -79,7 +99,14 @@ class LowonganController extends Controller
     {
         try {
             $validatedData = $this->lowonganService->validateLowonganData($request);
-            $this->lowonganService->updateLowongan($id, $validatedData);
+            
+            $jurusanIds = $validatedData['jurusan_ids'];
+            unset($validatedData['jurusan_ids']);
+            
+            $lowongan = $this->lowonganService->updateLowongan($id, $validatedData);
+
+            $lowongan->jurusan()->sync($jurusanIds);
+            
             Alert::success('Berhasil', 'Lowongan berhasil diperbarui.');
             return redirect()->route('admin.lowongan.index');
         } catch (\Exception $e) {

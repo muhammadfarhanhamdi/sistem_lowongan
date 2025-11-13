@@ -31,49 +31,70 @@
 
       <!-- Search Form -->
       <div class="bg-[#007E5D] rounded-xl p-6 mb-16 w-full shadow-md">
-        <form class="grid grid-cols-1 md:grid-cols-5 gap-4">
-          <div class="relative md:col-span-1">
-            <select class="w-full bg-white rounded-lg px-4 py-3 appearance-none cursor-pointer text-gray-700">
-              <option value="">Posisi</option>
-            </select>
-            <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-              <i class="fa-solid fa-chevron-down text-gray-400"></i>
+        <form class="grid grid-cols-1 md:grid-cols-5 gap-4" method="GET" action="{{ route('welcome') }}"> 
+            
+            <div class="relative md:col-span-1">
+                <select name="posisi" class="w-full bg-white rounded-lg px-4 py-3 appearance-none cursor-pointer text-gray-700">
+                    <option value="">Posisi</option>
+                    @foreach($kategoris as $kategori)
+                        <option value="{{ $kategori->id }}" {{ request('posisi') == $kategori->id ? 'selected' : '' }}>
+                            {{ $kategori->nama_kategori }}
+                        </option>
+                    @endforeach
+                </select>
+                <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                    <i class="fa-solid fa-chevron-down text-gray-400"></i>
+                </div>
             </div>
-          </div>
-
-          <div class="relative md:col-span-1">
-            <select class="w-full bg-white rounded-lg px-4 py-3 appearance-none cursor-pointer text-gray-700">
-              <option value="">Satuan Kerja</option>
-            </select>
-            <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-              <i class="fa-solid fa-chevron-down text-gray-400"></i>
+    
+            <div class="relative md:col-span-1">
+                <select name="satuan_kerja" class="w-full bg-white rounded-lg px-4 py-3 appearance-none cursor-pointer text-gray-700">
+                    <option value="">Satuan Kerja</option>
+                    @foreach($satuanKerjas as $satuanKerja)
+                        <option value="{{ $satuanKerja->id }}" {{ request('satuan_kerja') == $satuanKerja->id ? 'selected' : '' }}>
+                            {{ $satuanKerja->nama_satuan }}
+                        </option>
+                    @endforeach
+                </select>
+                <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                    <i class="fa-solid fa-chevron-down text-gray-400"></i>
+                </div>
             </div>
-          </div>
-
-          <div class="relative md:col-span-1">
-            <select class="w-full bg-white rounded-lg px-4 py-3 appearance-none cursor-pointer text-gray-700">
-              <option value="">Jurusan</option>
-            </select>
-            <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-              <i class="fa-solid fa-chevron-down text-gray-400"></i>
+    
+            <div class="relative md:col-span-1">
+                <select name="jurusan" class="w-full bg-white rounded-lg px-4 py-3 appearance-none cursor-pointer text-gray-700">
+                    <option value="">Jurusan</option>
+                     @foreach($jurusans as $jurusan)
+                        <option value="{{ $jurusan->id }}" {{ request('jurusan') == $jurusan->id ? 'selected' : '' }}>
+                            {{ $jurusan->nama_jurusan }}
+                        </option>
+                    @endforeach
+                </select>
+                <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                    <i class="fa-solid fa-chevron-down text-gray-400"></i>
+                </div>
             </div>
-          </div>
-
-          <div class="relative md:col-span-1">
-            <select class="w-full bg-white rounded-lg px-4 py-3 appearance-none cursor-pointer text-gray-700">
-              <option value="">Jenjang Pendidikan</option>
-            </select>
-            <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
-              <i class="fa-solid fa-chevron-down text-gray-400"></i>
+    
+            <div class="relative md:col-span-1">
+                <select name="jenjang" class="w-full bg-white rounded-lg px-4 py-3 appearance-none cursor-pointer text-gray-700">
+                    <option value="">Jenjang Pendidikan</option>
+                     @foreach($jenjangs as $jenjang)
+                        <option value="{{ $jenjang->id }}" {{ request('jenjang') == $jenjang->id ? 'selected' : '' }}>
+                            {{ $jenjang->nama_jenjang }}
+                        </option>
+                    @endforeach
+                </select>
+                <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                    <i class="fa-solid fa-chevron-down text-gray-400"></i>
+                </div>
             </div>
-          </div>
-
-          <button type="submit" class="bg-[#FCD12A] text-black font-semibold px-6 py-3 rounded-lg hover:bg-yellow-400 transition duration-300 flex items-center justify-center gap-2">
-            <span>Cari Lowongan</span>
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
+    
+            <button type="submit" class="bg-[#FCD12A] text-black font-semibold px-6 py-3 rounded-lg hover:bg-yellow-400 transition duration-300 flex items-center justify-center gap-2">
+                <span>Cari Lowongan</span>
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
         </form>
-      </div>
+    </div>
 
       <!-- Job Cards Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

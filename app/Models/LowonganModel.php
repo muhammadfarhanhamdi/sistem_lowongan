@@ -44,6 +44,16 @@ class LowonganModel extends Model
         return $this->belongsTo(PeriodeMagangModel::class, 'id_periode', 'id');
     }
 
+    public function jenjangPendidikan()
+    {
+        return $this->belongsTo(JenjangPendidikanModel::class, 'id_jenjang_pendidikan', 'id');
+    }
+
+    public function jurusan()
+    {
+        return $this->belongsToMany(JurusanModel::class, 'lowongan_jurusan', 'id_lowongan', 'id_jurusan');
+    }
+
     public function pelamar()
     {
         return $this->hasMany(PendaftaranModel::class, 'id_lowongan', 'id');

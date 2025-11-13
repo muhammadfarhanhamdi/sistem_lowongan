@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,8 +22,18 @@ class DatabaseSeeder extends Seeder
             'id_role' => 1,
         ]);
         
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;'); 
+
         $this->call([
             RoleSeeder::class,
+            SatuanKerjaSeeder::class,
+            KategoriLowonganSeeder::class,
+            PeriodeMagangSeeder::class,
+            LowonganSeeder::class,
+            JenjangPendidikanSeeder::class,
+            JurusanSeeder::class,
         ]);
+        
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

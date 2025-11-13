@@ -3,27 +3,24 @@
 
 <head>
 
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Meta -->
     <meta name="description" content="">
     <meta name="author" content="Themepixels">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('template/dist/assets/img/favicon.png') }}">
 
     <title>Perencanaan | DPR RI</title>
 
-    <!-- Vendor CSS -->
     <link rel="stylesheet" href="{{ asset('template/dist/lib/remixicon/fonts/remixicon.css') }}">
     <link rel="stylesheet" href="{{ asset('template/dist/lib/jqvmap/jqvmap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('template/dist/lib/apexcharts/apexcharts.css') }}">
     <link rel="stylesheet" href="{{ asset('template/dist/lib/prismjs/themes/prism.min.css') }}">
-
-    <!-- Template CSS -->
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    
     <link rel="stylesheet" href="{{ asset('template/dist/assets/css/style.min.css') }}">
     <link rel="stylesheet" href="{{ asset('DataTables/datatables.css') }}">
     <link rel="stylesheet" href="{{ asset('DataTables/datatables.min.css') }}">
@@ -32,6 +29,12 @@
         table.dataTable.table-bordered>thead>tr>th,
         table.dataTable.table-bordered>tbody>tr>td {
             border: 1px solid #dee2e6 !important;
+        }
+        /* Overwrite Select2 style to match bootstrap borders */
+        .select2-container .select2-selection--single {
+            height: calc(1.5em + 0.75rem + 2px) !important;
+            padding-top: 0.375rem !important;
+            padding-bottom: 0.375rem !important;
         }
     </style>
 </head>
@@ -62,6 +65,7 @@
     <script src="{{ asset('template/dist/assets/js/db.data.js') }}"></script>
     <script src="{{ asset('template/dist/assets/js/db.sales.js') }}"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
     <script src="{{ asset('template/dist/lib/gridjs-jquery/gridjs.production.min.js') }}"></script>
     <script src="{{ asset('template/dist/lib/prismjs/prism.js') }}"></script>
