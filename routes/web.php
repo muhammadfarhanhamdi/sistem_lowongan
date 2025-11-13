@@ -96,26 +96,26 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('we
 // })
 // ->name('public.publikasi.publikasi');
 // // Public About page route (used by navbar and CTAs)
-// Route::get('/tentang-kami', function () {
-//     return view('Public.TentangKami.index');
-// })->name('tentang.kami');
-// Route::get('/lowongan', function () {
-//     return view('Public.Lowongan.index');
-// })->name('public.lowongan.lowongan');
+Route::get('/tentang-kami', function () {
+    return view('Public.TentangKami.index');
+})->name('tentang.kami');
+Route::get('/lowongan', function () {
+    return view('Public.Lowongan.index');
+})->name('public.lowongan.lowongan');
 
-// Route::get('/tentangkami', function () {
-//     return view('public.tentang.tentang');
-// })->name('public.tentang.tentang');
+Route::get('/tentangkami', function () {
+    return view('public.tentang.tentang');
+})->name('public.tentang.tentang');
 
-// // Public Contact page route
-// Route::get('/hubungi-kami', function () {
-//     return view('Public.HubungiKami.index');
-// })->name('hubungi.kami');
+// Public Contact page route
+Route::get('/hubungi-kami', function () {
+    return view('Public.HubungiKami.index');
+})->name('hubungi.kami');
 
-// // Public Satuan Kerja page route
-// Route::get('/satuan-kerja', function () {
-//     return view('Public.SatuanKerja.index');
-// })->name('satuan.kerja');
+// Public Satuan Kerja page route
+Route::get('/satuan-kerja', function () {
+    return view('Public.SatuanKerja.index');
+})->name('satuan.kerja');
 
 // Route::get('/login', function () {
 //     if (Auth::check()) {
