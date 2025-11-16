@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\LowonganController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SatuanKerjaController;
 use App\Http\Controllers\PeriodeMagangController;
@@ -91,6 +92,35 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 // })->name('welcome');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('welcome');
+
+Route::post('/login', [LoginController::class, 'login']);
+
+// Public About page route (used by navbar and CTAs)
+Route::get('/tentang-kami', function () {
+    return view('Public.TentangKami.index');
+})->name('tentang.kami');
+Route::get('/lowongan', [HomeController::class, 'showLowonganPage'])->name('public.lowongan.index');
+Route::get('/lowongan/{id}', [HomeController::class, 'showLowonganDetail'])->name('public.lowongan.detail');
+
+// Public Contact page route
+Route::get('/hubungi-kami', function () {
+    return view('Public.HubungiKami.index');
+})->name('hubungi.kami');
+
+// Public Satuan Kerja page route
+Route::get('/satuan-kerja', function () {
+    return view('Public.SatuanKerja.index');
+})->name('satuan.kerja');
+
+// Route::get('/login', function () {
+//     if (Auth::check()) {
+//         return redirect()->route('admin.dashboard.index');
+//     }
+//     return redirect('/login');
+// });
+// Route::get('/login', function () {
+//     return view('auth.login');
+// });
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', function () {

@@ -104,6 +104,5 @@ class LowonganService
             });
         }
             
-        return $query->orderBy('tanggal_tutup', 'asc')->get();
-    }
+        return $query->orderBy('tanggal_tutup', 'asc');    }
 }
