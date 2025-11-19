@@ -126,4 +126,6 @@ class LowonganController extends Controller
             return redirect()->route('admin.lowongan.index');
         }
     }
+    
 }
+

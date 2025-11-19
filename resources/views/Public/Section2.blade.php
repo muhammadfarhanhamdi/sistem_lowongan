@@ -143,9 +143,11 @@
             </div>
 
             {{-- Tombol Detail --}}
-            <a href="" class="mt-6 block text-center bg-[#FCD12A] text-[#1A1A1A] font-semibold py-3 rounded-lg hover:bg-yellow-400 transition duration-300">
-                Lihat Detail
-            </a>
+           <a href=""
+   class="mt-6 block text-center bg-[#FCD12A] text-[#1A1A1A] font-semibold py-3 rounded-lg hover:bg-yellow-400 transition duration-300">
+    Lihat Detail
+</a>
+
         </div>
         @empty
             <div class="col-span-3 text-center py-10 text-gray-600 border border-gray-300 rounded-lg">

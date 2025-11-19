@@ -44,17 +44,11 @@
               <span class="hover:text-yellow-300 transition">Hubungi Kami</span>
               <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-yellow-300 transition-all duration-300 group-hover:w-full"></span>
             </a>
-            @guest
+            
               <a href="{{ route('login') }}" class="bg-white text-black px-6 py-2 rounded-full flex items-center gap-2 font-medium shadow hover:bg-gray-100 transition">
                 <i class="fa-solid fa-right-to-bracket mr-2"></i> Login
               </a>
-            @else
-              <a href="{{ route('admin.dashboard.index') }}" class="hover:text-yellow-300">Dashboard</a>
-              <form method="POST" action="{{ route('logout') }}" class="inline">
-                @csrf
-                <button type="submit" class="hover:text-yellow-300">Logout</button>
-              </form>
-            @endguest
+           
           </div>
           <!-- Tombol Mobile -->
           <div class="md:hidden">

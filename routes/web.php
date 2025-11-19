@@ -111,6 +111,18 @@ Route::get('/hubungi-kami', function () {
 Route::get('/satuan-kerja', function () {
     return view('Public.SatuanKerja.index');
 })->name('satuan.kerja');
+Route::get('/detaillowongan', function () {
+    return view('Public.Lowongan.detaillowongan');
+})->name('detail.lowongan');
+
+Route::get('/loginuser', function () {
+    return view('Public.login');
+})->name('login.user');
+
+Route::get('/profile', function () {
+    return view('Public.User.profile');
+})->name('profile');  
+
 
 // Route::get('/login', function () {
 //     if (Auth::check()) {

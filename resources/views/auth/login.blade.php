@@ -1,86 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="id">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Themepixels">
-
-    <title>Login Sistem Informasi Magang | DPR RI</title>
-
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('template/dist/assets/img/favicon.png') }}">
-
-    <link rel="stylesheet" href="{{ asset('template/dist/lib/remixicon/fonts/remixicon.css') }}">
-    <link rel="stylesheet" href="{{ asset('template/dist/assets/css/style.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('template/dist/lib/animation/animation.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 
-<body class="page-sign d-block py-0">
+<body class="bg-slate-300">
 
-    <div class="row g-0">
-        <div class="col-md-7 col-lg-5 col-xl-4 col-wrapper animation-slide-left animation-duration-1">
-            <div class="card card-sign">
-                <div class="card-header text-center">
-                    <a href="{{ url('/') }}" class="header-logo mb-3">Sistem Informasi Magang</a>
-                    <!-- Logo Instansi -->
-                    <div class="my-3">
-                        <img src="{{ asset('template/dist/assets/img/logo.png') }}" alt="Logo" width="120"
-                            style="margin-left: 20px;">
+<div class="flex min-h-screen">
+
+    <!-- BAGIAN KIRI -->
+    <!-- BAGIAN KIRI -->
+<div class="hidden lg:flex w-1/2 relative">
+    <img src="{{ asset('images/home.jpg') }}" 
+         class="absolute inset-0 w-full h-full object-cover" />
+
+    <div class="absolute inset-0 bg-black/40"></div>
+
+    <!-- Tombol Beranda DI POJOK KIRI ATAS -->
+    <a href="{{ url('/') }}"
+       class="absolute top-6 left-6 px-5 py-2 border border-white text-white font-medium rounded-lg 
+              hover:bg-white hover:text-black transition z-20">
+        <i class="fa-solid fa-arrow-left mr-2"></i>
+        Kembali
+    </a>
+
+    <!-- Konten Tulisan -->
+    <div class="relative z-10 text-white px-14 my-auto">
+        <h1 class="text-4xl font-bold mb-4">Edit Smarter. Export Faster.<br>Create Anywhere.</h1>
+
+        <p class="text-lg leading-relaxed max-w-md">
+            From quick social media clips to full-length videos, our powerful editor 
+            lets you work seamlessly across devices.
+        </p>
+    </div>
+</div>
+
+
+    <!-- BAGIAN KANAN (FULL CARD) -->
+    <div class="w-full lg:w-1/2 bg-white rounded-l-3xl shadow-2xl p-10 flex items-center">
+
+        <div class="w-full">
+
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Welcome Back!</h2>
+            <p class="text-gray-600 mb-8">Log in to start creating stunning videos with ease.</p>
+
+            <form action="/login" method="POST" class="space-y-5">
+                @csrf
+
+                <!-- Email -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">Email</label>
+                    <input type="email" name="email"
+                        class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-black outline-none"
+                        placeholder="Input your email">
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label class="block text-gray-700 font-medium mb-1">Password</label>
+                    <div class="flex items-center border border-gray-300 rounded-xl px-4 py-3">
+                        <input type="password" name="password"
+                            class="w-full outline-none"
+                            placeholder="Input your password">
+                        <i class="fa-solid fa-eye text-gray-500"></i>
                     </div>
-                    <h3 class="card-title mb-1">Masuk</h3>
-                    <p class="card-text">Selamat Datang kembali! Silahkan masuk untuk melanjutkan.</p>
                 </div>
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-                        <div class="mb-4">
-                            <label class="form-label" for="email">Email</label>
-                            <input type="email" id="email"
-                                class="form-control @error('email') is-invalid @enderror" name="email"
-                                value="{{ old('email') }}" required autocomplete="email" autofocus
-                                placeholder="Masukkan Email Anda">
-                            @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="mb-4">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <label class="form-label mb-0" for="password">Sandi</label>
-                                <a href="#" class="small">Lupa Sandi?</a>
-                            </div>
-                            <input type="password" id="password"
-                                class="form-control @error('password') is-invalid @enderror" name="password" required
-                                autocomplete="current-password" placeholder="Masukkan Sandi Anda">
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-sign">Masuk</button>
-                        </div>
-                    </form>
+
+                <!-- Remember & Forgot -->
+                <div class="flex items-center justify-between text-gray-700">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" class="w-4 h-4">
+                        <span>Remember Me</span>
+                    </label>
+
+                    <a href="#" class="text-gray-700 hover:underline">Forgot Password?</a>
                 </div>
-            </div>
+
+                <!-- Tombol Login -->
+                <button class="w-full bg-black text-white font-semibold py-3 rounded-xl hover:bg-gray-900 transition">
+                    Login
+                </button>
+
+                <!-- Garis -->
+                <div class="flex items-center my-4">
+                    <hr class="flex-grow border-gray-300">
+                    <span class="mx-3 text-gray-500">Or continue with:</span>
+                    <hr class="flex-grow border-gray-300">
+                </div>
+
+                <!-- Google Button -->
+                <button type="button"
+                    class="w-full border border-gray-300 rounded-xl py-3 flex items-center justify-center gap-3 hover:bg-gray-50 transition">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5">
+                    <span>Continue with Google</span>
+                </button>
+            </form>
+
+            <p class="text-center text-gray-600 mt-6">
+                Don’t have an account?
+                <a href="/register" class="text-black font-semibold hover:underline">Sign up here</a>
+            </p>
+
         </div>
-        <div class="col d-none d-lg-block animation-slide-right animation-duration-1"><img class="auth-img"
-                alt="" src="{{ asset('template/dist/assets/img/bg-dpr.jpg') }}"> </div>
+
     </div>
 
-    <script src="{{ asset('template/dist/lib/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('template/dist/lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script>
-        'use script'
+</div>
 
-        var skinMode = localStorage.getItem('skin-mode');
-        if (skinMode) {
-            $('html').attr('data-skin', 'dark');
-        }
-    </script>
 </body>
-
 </html>
