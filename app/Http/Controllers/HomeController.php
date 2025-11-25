@@ -86,9 +86,26 @@ class HomeController extends Controller
     {
         try {
             $lowongan = $this->lowonganService->getLowonganById($id);
-            return view('Public.Lowongan.detail', compact('lowongan')); 
+            return view('Public.Lowongan.detaillowongan', compact('lowongan'));
         } catch (\Exception $e) {
             abort(404);
         }
+    }
+
+    /**
+     * Apply to a lowongan (placeholder implementation).
+     * Route protected by 'auth' middleware.
+     */
+    public function applyLowongan(Request $request, $id)
+    {
+        try {
+            $lowongan = $this->lowonganService->getLowonganById($id);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Lowongan tidak ditemukan.');
+        }
+
+        // TODO: Simpan data lamaran ke tabel pelamar / notifications
+        // Placeholder: flash success message
+        return redirect()->back()->with('success', 'Lamaran Anda telah dikirim. Terima kasih.');
     }
 }

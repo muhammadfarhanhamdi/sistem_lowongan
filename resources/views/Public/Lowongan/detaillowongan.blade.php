@@ -53,6 +53,13 @@
     <!-- Bagian Kanan (Detail) -->
     <div class="md:col-span-2 border rounded-xl p-8 bg-white shadow-sm">
 
+        @if(session('success'))
+            <div class="mb-4 p-3 rounded-lg bg-green-50 text-green-700">{{ session('success') }}</div>
+        @endif
+        @if(session('error'))
+            <div class="mb-4 p-3 rounded-lg bg-red-50 text-red-700">{{ session('error') }}</div>
+        @endif
+
         <div class="flex items-center gap-3 mb-5">
             <img src="{{ asset('images/logo_pustek.png') }}" class="w-12" alt="Logo" />
             <div>
@@ -88,6 +95,21 @@
             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
         </p>
+
+        <div class="mt-6">
+            @guest
+                <a href="{{ route('login') }}?redirect={{ urlencode(url()->current()) }}" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                    Login untuk Lamar
+                </a>
+            @endguest
+
+            @auth
+                <form method="POST" action="{{ route('public.lowongan.apply', $lowongan->id ?? 0) }}">
+                    @csrf
+                    <button type="submit" class="inline-block bg-amber-400 text-black px-6 py-3 rounded-lg font-semibold hover:bg-amber-300 transition">Lamar Sekarang</button>
+                </form>
+            @endauth
+        </div>
     </div>
 
 </div>

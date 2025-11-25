@@ -20,22 +20,36 @@ class LoginController extends Controller
     public function login(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'email' => ['required', 'string'],
-            'password' => ['required', 'string'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string', 'min:6'],
         ]);
 
-        $login = Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']]);
-
-        if ($login) {
+        // Attempt to authenticate
+        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
+            $request->session()->regenerate();
             $user = Auth::user();
             session(['name' => $user->name]);
             session(['email' => $user->email]);
-            return redirect()->route('admin.dashboard.index');
+
+            // Determine role robustly (project has id_role / roles table)
+            $isAdmin = false;
+            if (method_exists($user, 'isAdmin')) {
+                $isAdmin = $user->isAdmin();
+            } else {
+                if (!empty($user->id_role) && $user->id_role == 1) {
+                    $isAdmin = true;
+                } elseif (!empty($user->role) && strtolower($user->role) === 'admin') {
+                    $isAdmin = true;
+                }
+            }
+
+            $fallback = $isAdmin ? route('admin.dashboard.index') : route('welcome');
+            return redirect()->intended($fallback);
         }
 
         return back()->withErrors([
-            'username' => 'Username atau password salah.',
-        ])->onlyInput('username');
+            'email' => 'Email atau password salah.',
+        ])->withInput(['email' => $request->email]);
     }
 
 

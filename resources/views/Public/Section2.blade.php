@@ -16,7 +16,7 @@
 
       <!-- Heading & Subheading -->
       <div class="text-center mb-14">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-[#1A1A1A]">
+        <h2 class="text-3xl md:text-4xl fo5nt-bold mb-4 text-[#1A1A1A]">
           Temukan Karier yang paling Sesuai untuk Kamu
         </h2>
         <p id="lowongan-grid"  class="text-gray-600 max-w-3xl mx-auto leading-relaxed">
@@ -143,7 +143,7 @@
             </div>
 
             {{-- Tombol Detail --}}
-           <a href=""
+           <a href="{{ route('public.lowongan.detail', $lowongan->id) }}"
    class="mt-6 block text-center bg-[#FCD12A] text-[#1A1A1A] font-semibold py-3 rounded-lg hover:bg-yellow-400 transition duration-300">
     Lihat Detail
 </a>

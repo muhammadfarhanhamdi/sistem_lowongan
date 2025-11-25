@@ -8,6 +8,7 @@ use App\Http\Controllers\LowonganController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\SatuanKerjaController;
 use App\Http\Controllers\PeriodeMagangController;
 use App\Http\Controllers\PesertaMagangController;
@@ -86,6 +87,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
 // ubah route index menajdi welcome.blade.php
 // Route::get('/', function () {
 //     return view('welcome');
@@ -101,6 +105,8 @@ Route::get('/tentang-kami', function () {
 })->name('tentang.kami');
 Route::get('/lowongan', [HomeController::class, 'showLowonganPage'])->name('public.lowongan.index');
 Route::get('/lowongan/{id}', [HomeController::class, 'showLowonganDetail'])->name('public.lowongan.detail');
+// Apply (lamar) lowongan - hanya untuk user terautentikasi
+Route::post('/lowongan/{id}/apply', [HomeController::class, 'applyLowongan'])->name('public.lowongan.apply')->middleware('auth');
 
 // Public Contact page route
 Route::get('/hubungi-kami', function () {
