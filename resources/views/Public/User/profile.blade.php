@@ -42,7 +42,7 @@
     <aside class="col-span-12 md:col-span-4 lg:col-span-3 surface-card shadow-lg rounded-2xl p-6 border border-gray-100">
         <div class="flex flex-col items-center text-center">
             <div class="relative">
-                <img id="avatarPreview" src="{{ asset('images/default-avatar.png') }}" alt="Avatar" class="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md">
+                <img id="avatarPreview" src="{{ asset('images/avatar.jpg') }}" alt="Avatar" class="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md">
                 <label for="avatarInput" class="absolute -bottom-2 right-0 btn-avatar cursor-pointer shadow-lg hover:filter" title="Ubah avatar">
                     <i class="fa-solid fa-camera"></i>
                 </label>
