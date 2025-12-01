@@ -14,6 +14,8 @@ use App\Http\Controllers\PeriodeMagangController;
 use App\Http\Controllers\PesertaMagangController;
 use App\Http\Controllers\KategoriLowonganController;
 use App\Http\Controllers\JenjangPendidikanController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PendaftaranController;
 
 
 
@@ -86,6 +88,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     
 });
 
+// Admin dokumen listing
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+    Route::get('/dokumen', [\App\Http\Controllers\Admin\DokumenController::class, 'index'])->name('dokumen.index');
+});
+
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
@@ -125,9 +132,24 @@ Route::get('/loginuser', function () {
     return view('Public.login');
 })->name('login.user');
 
-Route::get('/profile', function () {
-    return view('Public.User.profile');
-})->name('profile');  
+Route::middleware('auth')->group(function(){
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::post('/profile/save', [ProfileController::class, 'save'])->name('profile.save');
+    // account update (name, email, phone, address, tanggal_lahir)
+    Route::post('/profile/account', [ProfileController::class, 'updateAccount'])->name('profile.account.save');
+    Route::post('/profile/avatar', [ProfileController::class, 'storeAvatar'])->name('profile.avatar.save');
+    Route::get('/profile/check-complete', [ProfileController::class, 'checkComplete'])->name('profile.check.complete');
+
+    // Debug route: show peserta_magang record for current user (local/dev helper)
+    Route::get('/debug/peserta-me', function () {
+        $user = Auth::user();
+        $peserta = \App\Models\PesertaMagangModel::where('id_user', $user->id)->first();
+        return response()->json($peserta);
+    })->name('debug.peserta');
+
+    // My applications page
+    Route::get('/my-applications', [App\Http\Controllers\HomeController::class, 'myApplications'])->name('my.applications');
+});
 
 
 // Route::get('/login', function () {
@@ -145,3 +167,11 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/login');
 })->name('logout');
+
+// Admin: manage pendaftaran (applications)
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+    Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran.index');
+    Route::get('/pendaftaran/{id}', [PendaftaranController::class, 'show'])->name('pendaftaran.show');
+    Route::post('/pendaftaran/{id}/approve', [PendaftaranController::class, 'approve'])->name('pendaftaran.approve');
+    Route::post('/pendaftaran/{id}/reject', [PendaftaranController::class, 'reject'])->name('pendaftaran.reject');
+});

@@ -73,6 +73,7 @@
                   <div id="profile-dropdown-menu" class="hidden absolute right-0 mt-2 w-44 bg-white rounded-md shadow-lg py-2 z-50">
                     @if($isAdmin)
                       <a href="{{ route('admin.dashboard.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                      <a href="{{ route('admin.dokumen.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dokumen</a>
                     @else
                       <a href="{{ route('profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
                     @endif
@@ -131,6 +132,7 @@
               <div class="mt-2 space-y-1">
                 @if($isAdminMobile)
                   <a href="{{ route('admin.dashboard.index') }}" class="block px-3 py-2 rounded hover:text-yellow-300">Dashboard</a>
+                  <a href="{{ route('admin.dokumen.index') }}" class="block px-3 py-2 rounded hover:text-yellow-300">Dokumen</a>
                 @else
                   <a href="{{ route('profile') }}" class="block px-3 py-2 rounded hover:text-yellow-300">Profile</a>
                 @endif

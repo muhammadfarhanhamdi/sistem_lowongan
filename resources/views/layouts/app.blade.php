@@ -122,6 +122,61 @@
             });
         });
     </script>
+    <script>
+        // Global SweetAlert2 confirmation handler
+        document.addEventListener('DOMContentLoaded', function () {
+            // Intercept submit on forms with class 'confirm-form'
+            document.querySelectorAll('form.confirm-form').forEach(function(form){
+                form.addEventListener('submit', function(e){
+                    e.preventDefault();
+                    var btn = form.querySelector('button[data-confirm]');
+                    var msg = btn ? btn.getAttribute('data-confirm') : 'Apakah Anda yakin?';
+                    Swal.fire({
+                        title: 'Konfirmasi',
+                        text: msg,
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya',
+                        cancelButtonText: 'Batal'
+                    }).then(function(result){
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+
+            // Handle buttons/links with data-confirm outside forms
+            document.body.addEventListener('click', function(e){
+                var el = e.target.closest('[data-confirm]');
+                if (!el) return;
+                // If inside a form, let the form handler manage it
+                var parentForm = el.closest('form');
+                if (parentForm && parentForm.classList.contains('confirm-form')) return;
+
+                e.preventDefault();
+                var msg = el.getAttribute('data-confirm') || 'Apakah Anda yakin?';
+                Swal.fire({
+                    title: 'Konfirmasi',
+                    text: msg,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya',
+                    cancelButtonText: 'Batal'
+                }).then(function(result){
+                    if (result.isConfirmed) {
+                        if (el.tagName.toLowerCase() === 'a' && el.href) {
+                            window.location = el.href;
+                        } else if (el.tagName.toLowerCase() === 'button') {
+                            // find enclosing form
+                            var f = el.closest('form');
+                            if (f) f.submit();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
     @stack('scripts')
 </body>
 

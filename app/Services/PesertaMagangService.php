@@ -55,19 +55,19 @@ class PesertaMagangService
                 'required',
                 'integer',
                 'exists:db_magang.users,id',
-                $id ? Rule::unique('db_magang.peserta_magang')->ignore($id, 'id_user') : Rule::unique('db_magang.peserta_magang', 'id_user')
+                // removed unique constraint on id_user to allow multiple peserta records per user
             ],
             'nim' => [
                 'nullable',
                 'string',
                 'max:50',
-                $id ? Rule::unique('db_magang.peserta_magang')->ignore($id, 'nim') : Rule::unique('db_magang.peserta_magang', 'nim')
+                // allow non-unique NIM here (no unique rule)
             ],
             'asal_institusi' => 'required|string|max:150',
             'jurusan' => 'nullable|string|max:100',
             'fakultas' => 'nullable|string|max:100',
-            'tanggal_mulai_magang' => 'nullable|date',
-            'tanggal_selesai_magang' => 'nullable|date|after_or_equal:tanggal_mulai_magang',
+            // removed tanggal_mulai_magang and tanggal_selesai_magang validation per request
+            // NOTE: CV handling is performed separately and stored in `dokumen` table; do not include 'cv' here
         ];
 
         return $request->validate($rules);
